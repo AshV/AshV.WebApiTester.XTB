@@ -109,6 +109,11 @@ namespace AshV.WebApiTester.XTB
 
         internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null, Dictionary<string, List<string>> customHeaders = null, string contentType = null)
         {
+            if (!csc.IsReady)
+            {
+                ShowErrorNotification("Service initiation failed! Try in a moment or restart the tool.", null);
+                return new CustomResponse();
+            }
             var token = csc.CurrentAccessToken;
             var customResponse = new CustomResponse();
             var client = new HttpClient();
