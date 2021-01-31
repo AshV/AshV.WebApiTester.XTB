@@ -1,12 +1,15 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -102,6 +105,39 @@ namespace AshV.WebApiTester.XTB
                 mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
             }
+        }
+
+        internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null, Dictionary<string, List<string>> customHeaders = null, string contentType = null)
+        {
+            var token = csc.CurrentAccessToken;
+            var customResponse = new CustomResponse();
+            var client = new HttpClient();
+            var msg = new HttpRequestMessage(method, "https://" + csc.CrmConnectOrgUriActual.Host + "/" + csc.ConnectedOrgVersion.ToString() + "/" + queryString);
+            MessageBox.Show(msg.RequestUri.ToString());
+            msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+            if (!string.IsNullOrEmpty(body))
+            {
+                msg.Content = new StringContent(
+                    body,
+                    UnicodeEncoding.UTF8,
+                    "application/json");
+            }
+
+            var timer = new Stopwatch();
+            timer.Start();
+            var response = client.SendAsync(msg).Result;
+            timer.Stop();
+            customResponse.Response = response;
+            customResponse.TimeSpentHead = timer.Elapsed.TotalSeconds;
+            MessageBox.Show(response.IsSuccessStatusCode.ToString());
+            timer.Start();
+            var responseBody = response.Content.ReadAsStringAsync().Result;
+            timer.Stop();
+            customResponse.TimeSpentBody = timer.Elapsed.TotalSeconds;
+            customResponse.TimeSpent = customResponse.TimeSpentHead + customResponse.TimeSpentBody;
+            customResponse.ResponseBody = responseBody;
+
+            return customResponse;
         }
     }
 }
