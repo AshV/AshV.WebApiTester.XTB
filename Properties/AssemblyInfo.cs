@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AshV.WebApiTester.XTB")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Microsoft Dataverse/Dynamics 365 Web API Tester Plugin for XrmToolBox")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://AshishVishwakarma.com")]
 [assembly: AssemblyProduct("AshV.WebApiTester.XTB")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("AshV")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

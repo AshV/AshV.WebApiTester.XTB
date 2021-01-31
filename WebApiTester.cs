@@ -12,8 +12,8 @@ namespace AshV.WebApiTester.XTB
     // Do not forget to update version number and author (company attribute) in AssemblyInfo.cs class
     // To generate Base64 string for Images below, you can use https://www.base64-image.de/
     [Export(typeof(IXrmToolBoxPlugin)),
-        ExportMetadata("Name", "My First Plugin"),
-        ExportMetadata("Description", "This is a description for my first plugin"),
+        ExportMetadata("Name", "AshV WebAPI Tester"),
+        ExportMetadata("Description", "Execute & Test Dataverse/Dynamics 365 WebAPIs."),
         // Please specify the base64 content of a 32x32 pixels image
         ExportMetadata("SmallImageBase64", null),
         // Please specify the base64 content of a 80x80 pixels image
@@ -21,17 +21,17 @@ namespace AshV.WebApiTester.XTB
         ExportMetadata("BackgroundColor", "Lavender"),
         ExportMetadata("PrimaryFontColor", "Black"),
         ExportMetadata("SecondaryFontColor", "Gray")]
-    public class MyPlugin : PluginBase
+    public class WebApiTester : PluginBase
     {
         public override IXrmToolBoxPluginControl GetControl()
         {
-            return new MyPluginControl();
+            return new WebApiTesterControl();
         }
 
         /// <summary>
         /// Constructor 
         /// </summary>
-        public MyPlugin()
+        public WebApiTester()
         {
             // If you have external assemblies that you need to load, uncomment the following to 
             // hook into the event that will fire when an Assembly fails to resolve

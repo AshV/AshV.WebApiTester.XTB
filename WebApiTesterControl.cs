@@ -14,11 +14,11 @@ using XrmToolBox.Extensibility;
 
 namespace AshV.WebApiTester.XTB
 {
-    public partial class MyPluginControl : PluginControlBase
+    public partial class WebApiTesterControl : PluginControlBase
     {
         private Settings mySettings;
 
-        public MyPluginControl()
+        public WebApiTesterControl()
         {
             InitializeComponent();
         }

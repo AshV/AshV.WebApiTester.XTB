@@ -1,7 +1,7 @@
 ﻿
 namespace AshV.WebApiTester.XTB
 {
-    partial class MyPluginControl
+    partial class WebApiTesterControl
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,7 +29,7 @@ namespace AshV.WebApiTester.XTB
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyPluginControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebApiTesterControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tsbSample = new System.Windows.Forms.ToolStripButton();

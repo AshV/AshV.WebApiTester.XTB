@@ -132,12 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyPlugin.cs" />
-    <Compile Include="MyPluginControl.cs">
+    <Compile Include="WebApiTester.cs" />
+    <Compile Include="WebApiTesterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MyPluginControl.designer.cs">
-      <DependentUpon>MyPluginControl.cs</DependentUpon>
+    <Compile Include="WebApiTesterControl.designer.cs">
+      <DependentUpon>WebApiTesterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
