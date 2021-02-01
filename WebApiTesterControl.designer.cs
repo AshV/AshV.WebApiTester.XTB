@@ -33,8 +33,6 @@ namespace AshV.WebApiTester.XTB
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparatorMid = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbToken = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.splitContainerRoot = new System.Windows.Forms.SplitContainer();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,9 +51,9 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponse = new System.Windows.Forms.TabPage();
             this.tabResponseChild = new System.Windows.Forms.TabControl();
             this.tabPageResponseBody = new System.Windows.Forms.TabPage();
+            this.txtResponseBody = new System.Windows.Forms.TextBox();
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtResponseBody = new System.Windows.Forms.TextBox();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
@@ -75,9 +73,7 @@ namespace AshV.WebApiTester.XTB
             this.toolStripMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbClose,
-            this.tssSeparatorMid,
-            this.tsbToken,
-            this.toolStripSeparator1});
+            this.tssSeparatorMid});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -100,19 +96,6 @@ namespace AshV.WebApiTester.XTB
             this.tssSeparatorMid.Name = "tssSeparatorMid";
             this.tssSeparatorMid.Padding = new System.Windows.Forms.Padding(1);
             this.tssSeparatorMid.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tsbToken
-            // 
-            this.tsbToken.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsbToken.Name = "tsbToken";
-            this.tsbToken.Size = new System.Drawing.Size(127, 24);
-            this.tsbToken.Text = "Get Access Token";
-            this.tsbToken.Click += new System.EventHandler(this.tsbSample_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // splitContainerRoot
             // 
@@ -310,6 +293,14 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseBody.Text = "Response Body";
             this.tabPageResponseBody.UseVisualStyleBackColor = true;
             // 
+            // txtResponseBody
+            // 
+            this.txtResponseBody.Location = new System.Drawing.Point(53, 42);
+            this.txtResponseBody.Multiline = true;
+            this.txtResponseBody.Name = "txtResponseBody";
+            this.txtResponseBody.Size = new System.Drawing.Size(100, 22);
+            this.txtResponseBody.TabIndex = 0;
+            // 
             // tabPageResponseHeaders
             // 
             this.tabPageResponseHeaders.Location = new System.Drawing.Point(4, 25);
@@ -328,14 +319,6 @@ namespace AshV.WebApiTester.XTB
             this.label6.Size = new System.Drawing.Size(486, 17);
             this.label6.TabIndex = 0;
             this.label6.Text = "lblOrgUrl";
-            // 
-            // txtResponseBody
-            // 
-            this.txtResponseBody.Location = new System.Drawing.Point(53, 42);
-            this.txtResponseBody.Multiline = true;
-            this.txtResponseBody.Name = "txtResponseBody";
-            this.txtResponseBody.Size = new System.Drawing.Size(100, 22);
-            this.txtResponseBody.TabIndex = 0;
             // 
             // WebApiTesterControl
             // 
@@ -372,7 +355,6 @@ namespace AshV.WebApiTester.XTB
         #endregion
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.ToolStripButton tsbClose;
-        private System.Windows.Forms.ToolStripButton tsbToken;
         private System.Windows.Forms.ToolStripSeparator tssSeparatorMid;
         private System.Windows.Forms.SplitContainer splitContainerRoot;
         private System.Windows.Forms.TabControl tabReqestResponse;
@@ -392,7 +374,6 @@ namespace AshV.WebApiTester.XTB
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtRequestBody;
         private System.Windows.Forms.TextBox txtResponseBody;

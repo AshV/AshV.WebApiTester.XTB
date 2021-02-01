@@ -63,14 +63,7 @@ namespace AshV.WebApiTester.XTB
         {
             CloseTool();
         }
-
-        private void tsbSample_Click(object sender, EventArgs e)
-        {
-            // The ExecuteMethod method handles connecting to an
-            // organization if XrmToolBox is not yet connected
-            //  ExecuteMethod(GetAccounts);
-        }
-
+              
         private void ExecuteWebApiRequest()
         {
             WorkAsync(new WorkAsyncInfo
