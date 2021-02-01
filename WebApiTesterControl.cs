@@ -37,16 +37,9 @@ namespace AshV.WebApiTester.XTB
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
-        {                   
-            cmbMethod.SelectedIndex = 0;
-            txtRequestUri.ScrollBars = ScrollBars.Vertical;
-            tabReqestResponse.Dock = DockStyle.Fill;
-            tabRequestChild.Dock = DockStyle.Fill;
-            txtRequestBody.Dock = DockStyle.Fill;
-            txtRequestBody.ScrollBars = ScrollBars.Vertical;
-            tabResponseChild.Dock = DockStyle.Fill;
-            txtResponseBody.Dock = DockStyle.Fill;
-            txtResponseBody.ScrollBars = ScrollBars.Vertical;
+        {
+            ApplyTheme(this);
+            InitCustomStyle();
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -106,17 +99,22 @@ namespace AshV.WebApiTester.XTB
                     {
                         MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    var customResponse = args.Result as CustomResponse;
-                    var result = customResponse.Response;
+                    var cr = args.Result as CustomResponse;
+                    var result = cr.Response;
                     if (result != null)
                     {
                         tabReqestResponse.SelectedIndex = 1;
                         tabResponseChild.SelectedIndex = 0;
-                        //    lblResponseStatus.Text += result.StatusCode.ToString();
 
-                        MessageBox.Show("Time Spent" + customResponse.TimeSpent);
-                        if (!string.IsNullOrEmpty(customResponse.ResponseBody))
-                            txtResponseBody.Text = JValue.Parse(customResponse.ResponseBody).ToString(Formatting.Indented);
+                        if (!string.IsNullOrEmpty(cr.ResponseBody))
+                            txtResponseBody.Text = JValue.Parse(cr.ResponseBody).ToString(Formatting.Indented);
+
+                        lblOrgUrl.Text = $"Connected to : {cr.Endpoint}";
+                        lblSize.Text = $"Size : {cr.Size / 1024} kb";
+                        lblStatusCode.Text = $"Status Code : {(int)result.StatusCode}";
+                        lblStatusMessage.Text = $"Status : {result.StatusCode}";
+                        lblTime.Text = $"Time : {cr.TimeSpent} s";
+                        lblVersion.Text = $"Api : v{cr.ApiVersion}";
                     }
                 }
             });
@@ -156,10 +154,11 @@ namespace AshV.WebApiTester.XTB
                 return new CustomResponse();
             }
             var token = csc.CurrentAccessToken;
-            var customResponse = new CustomResponse();
+            var cr = new CustomResponse();
             var client = new HttpClient();
-            var msg = new HttpRequestMessage(method, "https://" + csc.CrmConnectOrgUriActual.Host + "/api/data/v" + csc.ConnectedOrgVersion.ToString() + "/" + queryString);
-            MessageBox.Show(msg.RequestUri.ToString());
+            cr.Endpoint = $"https://{csc.CrmConnectOrgUriActual.Host}/api/data/v{csc.ConnectedOrgVersion}/";
+            cr.ApiVersion = csc.ConnectedOrgVersion.ToString();
+            var msg = new HttpRequestMessage(method, cr.Endpoint + queryString);
             msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
             if (!string.IsNullOrEmpty(body))
             {
@@ -169,27 +168,98 @@ namespace AshV.WebApiTester.XTB
                     "application/json");
             }
 
+
             var timer = new Stopwatch();
             timer.Start();
             var response = client.SendAsync(msg).Result;
             timer.Stop();
-            customResponse.Response = response;
-            customResponse.TimeSpentHead = timer.Elapsed.TotalSeconds;
-            MessageBox.Show(response.IsSuccessStatusCode.ToString());
+
+            cr.Response = response;
+            cr.TimeSpentHead = timer.Elapsed.TotalSeconds;
+
             timer.Start();
             var responseBody = response.Content.ReadAsStringAsync().Result;
             timer.Stop();
-            customResponse.TimeSpentBody = timer.Elapsed.TotalSeconds;
-            customResponse.TimeSpent = customResponse.TimeSpentHead + customResponse.TimeSpentBody;
-            customResponse.ResponseBody = responseBody;
 
-            return customResponse;
+            cr.TimeSpentBody = timer.Elapsed.TotalSeconds;
+            cr.TimeSpent = cr.TimeSpentHead + cr.TimeSpentBody;
+            cr.ResponseBody = responseBody;
+
+            cr.ContentSize = responseBody.LongCount();
+            cr.ResponseSize = (long)response.Content.Headers.ContentLength;
+            cr.Size = cr.ResponseSize + cr.ContentSize;
+
+            return cr;
+            /* Header logic
+           MessageBox.Show(result.Content.Headers.ContentLength?.ToString());
+           MessageBox.Show(result.Headers.ToString().Length.ToString());
+
+           var list = "";
+           var header = result.Headers;
+           var h = header.GetEnumerator();
+           do
+           {
+               list += h.Current.Key + " : " + JsonConvert.SerializeObject(h.Current.Value) + Environment.NewLine;
+           } while (h.MoveNext());
+           list += "------------------" + Environment.NewLine;
+           var header1 = result.Content.Headers;
+           var h1 = header1.GetEnumerator();
+           do
+           {
+               list += h1.Current.Key + " : " + JsonConvert.SerializeObject(h1.Current.Value) + Environment.NewLine;
+           } while (h1.MoveNext());
+           textBox1.Text = list;
+            End Header Logic */
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
             btnSend.Enabled = false;
             ExecuteMethod(ExecuteWebApiRequest);
+        }
+
+        internal void ApplyTheme(UserControl parent)
+        {
+            foreach (Control c in parent.Controls)
+                UpdateColorControls(c);
+
+            void UpdateColorControls(Control myControl)
+            {
+                myControl.Font = new System.Drawing.Font("Verdana", 8);
+
+                //if (!(myControl is Button) || !(myControl is ComboBox))
+                //    myControl.BackColor = Color.White;
+
+                if (myControl is TextBox || myControl is System.Windows.Forms.Label)
+                    myControl.ForeColor = Color.Purple;
+
+                foreach (Control subC in myControl.Controls)
+                    UpdateColorControls(subC);
+            }
+        }
+
+        internal void InitCustomStyle()
+        {
+            btnSend.Focus();
+
+            cmbMethod.SelectedIndex = 0;
+
+            tabReqestResponse.Dock = DockStyle.Fill;
+            tabRequestChild.Dock = DockStyle.Fill;
+            txtRequestBody.Dock = DockStyle.Fill;
+            tabResponseChild.Dock = DockStyle.Fill;
+            txtResponseBody.Dock = DockStyle.Fill;
+
+            txtResponseBody.ScrollBars = ScrollBars.Vertical;
+            txtRequestUri.ScrollBars = ScrollBars.Vertical;
+            txtRequestBody.ScrollBars = ScrollBars.Vertical;
+
+            lblOrgUrl.Text = "";
+            lblSize.Text = "";
+            lblStatusCode.Text = "";
+            lblStatusMessage.Text = "";
+            lblTime.Text = "";
+            lblVersion.Text = "";
         }
     }
 }

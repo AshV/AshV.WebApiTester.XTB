@@ -18,8 +18,8 @@ namespace AshV.WebApiTester.XTB
         ExportMetadata("SmallImageBase64", null),
         // Please specify the base64 content of a 80x80 pixels image
         ExportMetadata("BigImageBase64", null),
-        ExportMetadata("BackgroundColor", "Lavender"),
-        ExportMetadata("PrimaryFontColor", "Black"),
+        ExportMetadata("BackgroundColor", "Purple"),
+        ExportMetadata("PrimaryFontColor", "White"),
         ExportMetadata("SecondaryFontColor", "Gray")]
     public class WebApiTester : PluginBase
     {

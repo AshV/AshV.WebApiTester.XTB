@@ -13,16 +13,20 @@ namespace AshV.WebApiTester.XTB
 
         public string ResponseBody { get; set; }
 
+        public string Endpoint { get; set; }
+
+        public string ApiVersion { get; set; }
+
         public double TimeSpent { get; set; }
         public double TimeSpentHead { get; set; }
         public double TimeSpentBody { get; set; }
-                
+
         public Dictionary<string, List<string>> Headers { get; set; }
         public Dictionary<string, List<string>> ResponseHeaders { get; set; }
         public Dictionary<string, List<string>> ContentHeaders { get; set; }
 
-        public double Size { get; set; }
-        public double ResponseSize { get; set; }
-        public double ContentSize { get; set; }
+        public long Size { get; set; }
+        public long ResponseSize { get; set; }
+        public long ContentSize { get; set; }
     }
 }
