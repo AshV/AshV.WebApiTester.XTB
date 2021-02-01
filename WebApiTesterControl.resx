@@ -120,4 +120,31 @@
   <metadata name="toolStripMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="txtRequestUri.Text" xml:space="preserve">
+    <value>accounts?fetchXml=
+&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+  &lt;entity name="account"&gt;
+    &lt;attribute name="name" alias="Account_Name" /&gt;
+    &lt;attribute name="websiteurl" alias="Website_Url" /&gt;
+    &lt;attribute name="modifiedon" alias="Updated_On" /&gt;
+    &lt;attribute name="modifiedby" alias="Update_By" /&gt;
+    &lt;attribute name="createdon" alias="Created_On" /&gt;
+    &lt;attribute name="createdby" alias="Created_By" /&gt;
+    &lt;order attribute="name" descending="false" /&gt;
+    &lt;filter type="and"&gt;
+      &lt;condition attribute="name" operator="not-null" /&gt;
+    &lt;/filter&gt;
+    &lt;link-entity name="contact" from="contactid" to="primarycontactid" visible="false" link-type="outer" alias="PC"&gt;
+      &lt;attribute name="fullname"  alias="Primary_Contact_Full_Name" /&gt;
+      &lt;attribute name="firstname"  alias="Primary_Contact_Fisrt_Name" /&gt;
+      &lt;attribute name="lastname"  alias="Primary_Contact_Last_Name" /&gt;
+      &lt;attribute name="emailaddress1" alias="Primary_Contact_Email_Address" /&gt;
+    &lt;/link-entity&gt;
+    &lt;link-entity name="account" from="accountid" to="parentaccountid" visible="false" link-type="outer" alias="PA"&gt;
+      &lt;attribute name="name" alias="Parent_Account_Name" /&gt;
+      &lt;attribute name="websiteurl" alias="Parent_Account_Website_Url" /&gt;
+    &lt;/link-entity&gt;
+  &lt;/entity&gt;
+&lt;/fetch&gt;</value>
+  </data>
 </root>

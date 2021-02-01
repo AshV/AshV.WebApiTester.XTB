@@ -29,30 +29,33 @@ namespace AshV.WebApiTester.XTB
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebApiTesterControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparatorMid = new System.Windows.Forms.ToolStripSeparator();
             this.tsbToken = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.splitContainerRoot = new System.Windows.Forms.SplitContainer();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtRequestUri = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.cmbMethod = new System.Windows.Forms.ComboBox();
             this.tabReqestResponse = new System.Windows.Forms.TabControl();
             this.tabPageRequest = new System.Windows.Forms.TabPage();
-            this.tabPageResponse = new System.Windows.Forms.TabPage();
             this.tabRequestChild = new System.Windows.Forms.TabControl();
             this.tabPageRequestBody = new System.Windows.Forms.TabPage();
+            this.txtRequestBody = new System.Windows.Forms.TextBox();
             this.tabPageRequestHeaders = new System.Windows.Forms.TabPage();
+            this.tabPageResponse = new System.Windows.Forms.TabPage();
             this.tabResponseChild = new System.Windows.Forms.TabControl();
             this.tabPageResponseBody = new System.Windows.Forms.TabPage();
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
-            this.cmbMethod = new System.Windows.Forms.ComboBox();
-            this.btnSend = new System.Windows.Forms.Button();
-            this.txtRequestUri = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.txtResponseBody = new System.Windows.Forms.TextBox();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
@@ -60,9 +63,11 @@ namespace AshV.WebApiTester.XTB
             this.splitContainerRoot.SuspendLayout();
             this.tabReqestResponse.SuspendLayout();
             this.tabPageRequest.SuspendLayout();
-            this.tabPageResponse.SuspendLayout();
             this.tabRequestChild.SuspendLayout();
+            this.tabPageRequestBody.SuspendLayout();
+            this.tabPageResponse.SuspendLayout();
             this.tabResponseChild.SuspendLayout();
+            this.tabPageResponseBody.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -76,7 +81,7 @@ namespace AshV.WebApiTester.XTB
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripMenu.Size = new System.Drawing.Size(832, 27);
+            this.toolStripMenu.Size = new System.Drawing.Size(907, 27);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
@@ -104,6 +109,11 @@ namespace AshV.WebApiTester.XTB
             this.tsbToken.Text = "Get Access Token";
             this.tsbToken.Click += new System.EventHandler(this.tsbSample_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
             // splitContainerRoot
             // 
             this.splitContainerRoot.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -125,9 +135,88 @@ namespace AshV.WebApiTester.XTB
             // splitContainerRoot.Panel2
             // 
             this.splitContainerRoot.Panel2.Controls.Add(this.tabReqestResponse);
-            this.splitContainerRoot.Size = new System.Drawing.Size(832, 542);
-            this.splitContainerRoot.SplitterDistance = 180;
+            this.splitContainerRoot.Size = new System.Drawing.Size(907, 670);
+            this.splitContainerRoot.SplitterDistance = 179;
             this.splitContainerRoot.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(20, 151);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(49, 17);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "lblSize";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 134);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 17);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "lblTime";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(20, 117);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 17);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "lblStatusMessage";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 100);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 17);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "lblStatusCode";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 83);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "lblVersion";
+            // 
+            // txtRequestUri
+            // 
+            this.txtRequestUri.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRequestUri.Location = new System.Drawing.Point(202, 14);
+            this.txtRequestUri.Multiline = true;
+            this.txtRequestUri.Name = "txtRequestUri";
+            this.txtRequestUri.Size = new System.Drawing.Size(690, 154);
+            this.txtRequestUri.TabIndex = 2;
+            this.txtRequestUri.Text = resources.GetString("txtRequestUri.Text");
+            // 
+            // btnSend
+            // 
+            this.btnSend.Location = new System.Drawing.Point(14, 44);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(182, 36);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // cmbMethod
+            // 
+            this.cmbMethod.FormattingEnabled = true;
+            this.cmbMethod.Items.AddRange(new object[] {
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"});
+            this.cmbMethod.Location = new System.Drawing.Point(14, 14);
+            this.cmbMethod.Name = "cmbMethod";
+            this.cmbMethod.Size = new System.Drawing.Size(182, 24);
+            this.cmbMethod.TabIndex = 0;
             // 
             // tabReqestResponse
             // 
@@ -150,17 +239,6 @@ namespace AshV.WebApiTester.XTB
             this.tabPageRequest.Text = "Request";
             this.tabPageRequest.UseVisualStyleBackColor = true;
             // 
-            // tabPageResponse
-            // 
-            this.tabPageResponse.Controls.Add(this.tabResponseChild);
-            this.tabPageResponse.Location = new System.Drawing.Point(4, 25);
-            this.tabPageResponse.Name = "tabPageResponse";
-            this.tabPageResponse.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageResponse.Size = new System.Drawing.Size(660, 237);
-            this.tabPageResponse.TabIndex = 1;
-            this.tabPageResponse.Text = "Response";
-            this.tabPageResponse.UseVisualStyleBackColor = true;
-            // 
             // tabRequestChild
             // 
             this.tabRequestChild.Controls.Add(this.tabPageRequestBody);
@@ -173,6 +251,7 @@ namespace AshV.WebApiTester.XTB
             // 
             // tabPageRequestBody
             // 
+            this.tabPageRequestBody.Controls.Add(this.txtRequestBody);
             this.tabPageRequestBody.Location = new System.Drawing.Point(4, 25);
             this.tabPageRequestBody.Name = "tabPageRequestBody";
             this.tabPageRequestBody.Padding = new System.Windows.Forms.Padding(3);
@@ -180,6 +259,14 @@ namespace AshV.WebApiTester.XTB
             this.tabPageRequestBody.TabIndex = 0;
             this.tabPageRequestBody.Text = "Request Body";
             this.tabPageRequestBody.UseVisualStyleBackColor = true;
+            // 
+            // txtRequestBody
+            // 
+            this.txtRequestBody.Location = new System.Drawing.Point(45, 26);
+            this.txtRequestBody.Multiline = true;
+            this.txtRequestBody.Name = "txtRequestBody";
+            this.txtRequestBody.Size = new System.Drawing.Size(100, 22);
+            this.txtRequestBody.TabIndex = 0;
             // 
             // tabPageRequestHeaders
             // 
@@ -190,6 +277,17 @@ namespace AshV.WebApiTester.XTB
             this.tabPageRequestHeaders.TabIndex = 1;
             this.tabPageRequestHeaders.Text = "Request Headers";
             this.tabPageRequestHeaders.UseVisualStyleBackColor = true;
+            // 
+            // tabPageResponse
+            // 
+            this.tabPageResponse.Controls.Add(this.tabResponseChild);
+            this.tabPageResponse.Location = new System.Drawing.Point(4, 25);
+            this.tabPageResponse.Name = "tabPageResponse";
+            this.tabPageResponse.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageResponse.Size = new System.Drawing.Size(660, 237);
+            this.tabPageResponse.TabIndex = 1;
+            this.tabPageResponse.Text = "Response";
+            this.tabPageResponse.UseVisualStyleBackColor = true;
             // 
             // tabResponseChild
             // 
@@ -203,6 +301,7 @@ namespace AshV.WebApiTester.XTB
             // 
             // tabPageResponseBody
             // 
+            this.tabPageResponseBody.Controls.Add(this.txtResponseBody);
             this.tabPageResponseBody.Location = new System.Drawing.Point(4, 25);
             this.tabPageResponseBody.Name = "tabPageResponseBody";
             this.tabPageResponseBody.Padding = new System.Windows.Forms.Padding(3);
@@ -221,96 +320,22 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseHeaders.Text = "Response Headers";
             this.tabPageResponseHeaders.UseVisualStyleBackColor = true;
             // 
-            // cmbMethod
-            // 
-            this.cmbMethod.FormattingEnabled = true;
-            this.cmbMethod.Items.AddRange(new object[] {
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE"});
-            this.cmbMethod.Location = new System.Drawing.Point(14, 14);
-            this.cmbMethod.Name = "cmbMethod";
-            this.cmbMethod.Size = new System.Drawing.Size(121, 24);
-            this.cmbMethod.TabIndex = 0;
-            // 
-            // btnSend
-            // 
-            this.btnSend.Location = new System.Drawing.Point(14, 44);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(121, 36);
-            this.btnSend.TabIndex = 1;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            // 
-            // txtRequestUri
-            // 
-            this.txtRequestUri.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRequestUri.Location = new System.Drawing.Point(141, 14);
-            this.txtRequestUri.Multiline = true;
-            this.txtRequestUri.Name = "txtRequestUri";
-            this.txtRequestUri.Size = new System.Drawing.Size(676, 154);
-            this.txtRequestUri.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 83);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "lblVersion";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 17);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "lblStatusCode";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 117);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 17);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "lblStatusMessage";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 134);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 17);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "lblTime";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 151);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 17);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "lblSize";
-            // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Location = new System.Drawing.Point(330, 4);
+            this.label6.Location = new System.Drawing.Point(405, 4);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(486, 17);
             this.label6.TabIndex = 0;
             this.label6.Text = "lblOrgUrl";
             // 
-            // toolStripSeparator1
+            // txtResponseBody
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.txtResponseBody.Location = new System.Drawing.Point(53, 42);
+            this.txtResponseBody.Multiline = true;
+            this.txtResponseBody.Name = "txtResponseBody";
+            this.txtResponseBody.Size = new System.Drawing.Size(100, 22);
+            this.txtResponseBody.TabIndex = 0;
             // 
             // WebApiTesterControl
             // 
@@ -319,9 +344,9 @@ namespace AshV.WebApiTester.XTB
             this.Controls.Add(this.label6);
             this.Controls.Add(this.splitContainerRoot);
             this.Controls.Add(this.toolStripMenu);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "WebApiTesterControl";
-            this.Size = new System.Drawing.Size(832, 569);
+            this.Size = new System.Drawing.Size(907, 697);
             this.Load += new System.EventHandler(this.MyPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);
             this.toolStripMenu.PerformLayout();
@@ -332,9 +357,13 @@ namespace AshV.WebApiTester.XTB
             this.splitContainerRoot.ResumeLayout(false);
             this.tabReqestResponse.ResumeLayout(false);
             this.tabPageRequest.ResumeLayout(false);
-            this.tabPageResponse.ResumeLayout(false);
             this.tabRequestChild.ResumeLayout(false);
+            this.tabPageRequestBody.ResumeLayout(false);
+            this.tabPageRequestBody.PerformLayout();
+            this.tabPageResponse.ResumeLayout(false);
             this.tabResponseChild.ResumeLayout(false);
+            this.tabPageResponseBody.ResumeLayout(false);
+            this.tabPageResponseBody.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -365,5 +394,7 @@ namespace AshV.WebApiTester.XTB
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtRequestBody;
+        private System.Windows.Forms.TextBox txtResponseBody;
     }
 }

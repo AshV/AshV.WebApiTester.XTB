@@ -14,12 +14,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
+using ScintillaNET;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using XrmToolBox.Extensibility.Interfaces;
 
 namespace AshV.WebApiTester.XTB
 {
-    public partial class WebApiTesterControl : PluginControlBase
+    public partial class WebApiTesterControl : PluginControlBase, IGitHubPlugin, IHelpPlugin
     {
         private Settings mySettings;
+
+        public string RepositoryName => "AshV.WebApiTester.XTB";
+
+        public string UserName => "AshV";
+
+        public string HelpUrl => "https://github.com/AshV/AshV.WebApiTester.XTB/wiki";
 
         public WebApiTesterControl()
         {
@@ -28,8 +38,14 @@ namespace AshV.WebApiTester.XTB
 
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
-            ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
-
+            cmbMethod.SelectedIndex = 0;
+            txtRequestUri.ScrollBars = ScrollBars.Vertical;
+            tabReqestResponse.Dock = DockStyle.Fill;
+            tabRequestChild.Dock = DockStyle.Fill;
+            txtRequestBody.Dock = DockStyle.Fill;
+            txtRequestBody.ScrollBars = ScrollBars.Vertical;
+            tabResponseChild.Dock = DockStyle.Fill;
+            txtResponseBody.Dock = DockStyle.Fill;
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -52,20 +68,43 @@ namespace AshV.WebApiTester.XTB
         {
             // The ExecuteMethod method handles connecting to an
             // organization if XrmToolBox is not yet connected
-            ExecuteMethod(GetAccounts);
+            //  ExecuteMethod(GetAccounts);
         }
 
-        private void GetAccounts()
+        private void ExecuteWebApiRequest()
         {
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Getting accounts",
+                Message = "Executing WebAPI Request...",
                 Work = (worker, args) =>
                 {
-                    args.Result = Service.RetrieveMultiple(new QueryExpression("account")
+                    try
                     {
-                        TopCount = 50
-                    });
+                        var csc = ConnectionDetail.GetCrmServiceClient();
+
+                        switch (cmbMethod.SelectedItem.ToString())
+                        {
+                            case "GET":
+                                args.Result = RequestHelper(csc, HttpMethod.Get, txtRequestUri.Text);
+                                break;
+                            case "POST":
+                                args.Result = RequestHelper(csc, HttpMethod.Post, txtRequestUri.Text, txtRequestBody.Text);
+                                break;
+                            case "PATCH":
+                                args.Result = RequestHelper(csc, new HttpMethod("PATCH"), txtRequestUri.Text, txtRequestBody.Text);
+                                break;
+                            case "DELETE":
+                                args.Result = RequestHelper(csc, HttpMethod.Delete, txtRequestUri.Text, txtRequestBody.Text);
+                                break;
+                            default:
+                                ShowErrorNotification("Request is not proper!", null);
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowErrorNotification(ex.Message + " | " + ex?.InnerException?.Message, null);
+                    }
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -73,10 +112,29 @@ namespace AshV.WebApiTester.XTB
                     {
                         MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    var result = args.Result as EntityCollection;
+                    var customResponse = args.Result as CustomResponse;
+                    var result = customResponse.Response;
                     if (result != null)
                     {
-                        MessageBox.Show($"Found {result.Entities.Count} accounts");
+                        tabReqestResponse.SelectedIndex = 1;
+                        tabResponseChild.SelectedIndex = 0;
+                        //    lblResponseStatus.Text += result.StatusCode.ToString();
+
+                        var responseBody = "";
+                        if (result.IsSuccessStatusCode)
+                        {
+                            var timer = new Stopwatch();
+                            timer.Start();
+                            responseBody = result.Content.ReadAsStringAsync().Result;
+                            timer.Stop();
+                        }
+                        else
+                        {
+                            ShowErrorNotification("Bawal!", null);
+                        }
+
+                        MessageBox.Show("Time Spent" + customResponse.TimeSpent);
+                        txtResponseBody.Text = JValue.Parse(responseBody).ToString(Formatting.Indented);
                     }
                 }
             });
@@ -117,7 +175,7 @@ namespace AshV.WebApiTester.XTB
             var token = csc.CurrentAccessToken;
             var customResponse = new CustomResponse();
             var client = new HttpClient();
-            var msg = new HttpRequestMessage(method, "https://" + csc.CrmConnectOrgUriActual.Host + "/" + csc.ConnectedOrgVersion.ToString() + "/" + queryString);
+            var msg = new HttpRequestMessage(method, "https://" + csc.CrmConnectOrgUriActual.Host + "/api/data/v" + csc.ConnectedOrgVersion.ToString() + "/" + queryString);
             MessageBox.Show(msg.RequestUri.ToString());
             msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
             if (!string.IsNullOrEmpty(body))
@@ -143,6 +201,11 @@ namespace AshV.WebApiTester.XTB
             customResponse.ResponseBody = responseBody;
 
             return customResponse;
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            ExecuteMethod(ExecuteWebApiRequest);
         }
     }
 }

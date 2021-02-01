@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AshV.WebApiTester.XTB")]
 [assembly: AssemblyDescription("Microsoft Dataverse/Dynamics 365 Web API Tester Plugin for XrmToolBox")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://AshishVishwakarma.com")]
+[assembly: AssemblyCompany("Ashish Vishwakarma")]
 [assembly: AssemblyProduct("AshV.WebApiTester.XTB")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("AshV")]
