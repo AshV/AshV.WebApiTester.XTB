@@ -77,7 +77,7 @@ namespace AshV.WebApiTester.XTB
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripMenu.Size = new System.Drawing.Size(907, 27);
+            this.toolStripMenu.Size = new System.Drawing.Size(907, 31);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
@@ -100,7 +100,7 @@ namespace AshV.WebApiTester.XTB
             // splitContainerRoot
             // 
             this.splitContainerRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerRoot.Location = new System.Drawing.Point(0, 27);
+            this.splitContainerRoot.Location = new System.Drawing.Point(0, 31);
             this.splitContainerRoot.Name = "splitContainerRoot";
             this.splitContainerRoot.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -118,8 +118,8 @@ namespace AshV.WebApiTester.XTB
             // splitContainerRoot.Panel2
             // 
             this.splitContainerRoot.Panel2.Controls.Add(this.tabReqestResponse);
-            this.splitContainerRoot.Size = new System.Drawing.Size(907, 670);
-            this.splitContainerRoot.SplitterDistance = 232;
+            this.splitContainerRoot.Size = new System.Drawing.Size(907, 666);
+            this.splitContainerRoot.SplitterDistance = 230;
             this.splitContainerRoot.TabIndex = 5;
             // 
             // lblSize
@@ -321,6 +321,7 @@ namespace AshV.WebApiTester.XTB
             // 
             // lblOrgUrl
             // 
+            this.lblOrgUrl.BackColor = System.Drawing.SystemColors.Control;
             this.lblOrgUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOrgUrl.Location = new System.Drawing.Point(202, 5);
             this.lblOrgUrl.Name = "lblOrgUrl";

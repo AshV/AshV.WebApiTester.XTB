@@ -18,6 +18,8 @@ using ScintillaNET;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using XrmToolBox.Extensibility.Interfaces;
+using System.Xml;
+using System.IO;
 
 namespace AshV.WebApiTester.XTB
 {
@@ -107,7 +109,12 @@ namespace AshV.WebApiTester.XTB
                         tabResponseChild.SelectedIndex = 0;
 
                         if (!string.IsNullOrEmpty(cr.ResponseBody))
-                            txtResponseBody.Text = JValue.Parse(cr.ResponseBody).ToString(Formatting.Indented);
+                            txtResponseBody.Text =
+                            cr.ResponseBody.StartsWith("{") ?
+                            JValue.Parse(cr.ResponseBody).ToString(Newtonsoft.Json.Formatting.Indented)
+                            : cr.ResponseBody.StartsWith("<") ?
+                            FormatXml(cr.ResponseBody) :
+                            cr.ResponseBody;
 
                         lblOrgUrl.Text = $"Connected to : {cr.Endpoint}";
                         lblSize.Text = $"Size : {cr.Size / 1024} kb";
@@ -260,6 +267,26 @@ namespace AshV.WebApiTester.XTB
             lblStatusMessage.Text = "";
             lblTime.Text = "";
             lblVersion.Text = "";
+        }
+
+        /// <summary>
+        /// Formats the provided XML so it's indented and humanly-readable.
+        /// </summary>
+        /// <param name="inputXml">The input XML to format.</param>
+        /// <returns></returns>
+        public static string FormatXml(string inputXml)
+        {
+            XmlDocument document = new XmlDocument();
+            document.Load(new StringReader(inputXml));
+
+            StringBuilder builder = new StringBuilder();
+            using (XmlTextWriter writer = new XmlTextWriter(new StringWriter(builder)))
+            {
+                writer.Formatting = System.Xml.Formatting.Indented;
+                document.Save(writer);
+            }
+
+            return builder.ToString();
         }
     }
 }
