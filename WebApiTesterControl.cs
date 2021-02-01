@@ -37,7 +37,7 @@ namespace AshV.WebApiTester.XTB
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
-        {
+        {                   
             cmbMethod.SelectedIndex = 0;
             txtRequestUri.ScrollBars = ScrollBars.Vertical;
             tabReqestResponse.Dock = DockStyle.Fill;
@@ -46,6 +46,8 @@ namespace AshV.WebApiTester.XTB
             txtRequestBody.ScrollBars = ScrollBars.Vertical;
             tabResponseChild.Dock = DockStyle.Fill;
             txtResponseBody.Dock = DockStyle.Fill;
+            txtResponseBody.ScrollBars = ScrollBars.Vertical;
+
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -63,7 +65,7 @@ namespace AshV.WebApiTester.XTB
         {
             CloseTool();
         }
-              
+
         private void ExecuteWebApiRequest()
         {
             WorkAsync(new WorkAsyncInfo
@@ -74,7 +76,6 @@ namespace AshV.WebApiTester.XTB
                     try
                     {
                         var csc = ConnectionDetail.GetCrmServiceClient();
-
                         switch (cmbMethod.SelectedItem.ToString())
                         {
                             case "GET":
@@ -113,24 +114,13 @@ namespace AshV.WebApiTester.XTB
                         tabResponseChild.SelectedIndex = 0;
                         //    lblResponseStatus.Text += result.StatusCode.ToString();
 
-                        var responseBody = "";
-                        if (result.IsSuccessStatusCode)
-                        {
-                            var timer = new Stopwatch();
-                            timer.Start();
-                            responseBody = result.Content.ReadAsStringAsync().Result;
-                            timer.Stop();
-                        }
-                        else
-                        {
-                            ShowErrorNotification("Bawal!", null);
-                        }
-
                         MessageBox.Show("Time Spent" + customResponse.TimeSpent);
-                        txtResponseBody.Text = JValue.Parse(responseBody).ToString(Formatting.Indented);
+                        if (!string.IsNullOrEmpty(customResponse.ResponseBody))
+                            txtResponseBody.Text = JValue.Parse(customResponse.ResponseBody).ToString(Formatting.Indented);
                     }
                 }
             });
+            btnSend.Enabled = true;
         }
 
         /// <summary>
@@ -198,6 +188,7 @@ namespace AshV.WebApiTester.XTB
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            btnSend.Enabled = false;
             ExecuteMethod(ExecuteWebApiRequest);
         }
     }

@@ -314,9 +314,9 @@ namespace AshV.WebApiTester.XTB
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Location = new System.Drawing.Point(405, 4);
+            this.label6.Location = new System.Drawing.Point(154, 4);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(486, 17);
+            this.label6.Size = new System.Drawing.Size(737, 17);
             this.label6.TabIndex = 0;
             this.label6.Text = "lblOrgUrl";
             // 
