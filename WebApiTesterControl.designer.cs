@@ -29,16 +29,12 @@ namespace AshV.WebApiTester.XTB
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WebApiTesterControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparatorMid = new System.Windows.Forms.ToolStripSeparator();
             this.splitContainerRoot = new System.Windows.Forms.SplitContainer();
-            this.lblSize = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.lblStatusMessage = new System.Windows.Forms.Label();
-            this.lblStatusCode = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
             this.txtRequestUri = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.cmbMethod = new System.Windows.Forms.ComboBox();
@@ -54,6 +50,7 @@ namespace AshV.WebApiTester.XTB
             this.txtResponseBody = new System.Windows.Forms.TextBox();
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
             this.lblOrgUrl = new System.Windows.Forms.Label();
+            this.timerSendButton = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
@@ -77,21 +74,23 @@ namespace AshV.WebApiTester.XTB
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripMenu.Size = new System.Drawing.Size(907, 31);
+            this.toolStripMenu.Size = new System.Drawing.Size(907, 27);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
             // tsbClose
             // 
             this.tsbClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbClose.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.tsbClose.Name = "tsbClose";
-            this.tsbClose.Size = new System.Drawing.Size(34, 24);
+            this.tsbClose.Size = new System.Drawing.Size(35, 24);
             this.tsbClose.Text = "❌";
             this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
             // 
             // tssSeparatorMid
             // 
-            this.tssSeparatorMid.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.tssSeparatorMid.BackColor = System.Drawing.Color.Purple;
+            this.tssSeparatorMid.ForeColor = System.Drawing.Color.Purple;
             this.tssSeparatorMid.Margin = new System.Windows.Forms.Padding(1);
             this.tssSeparatorMid.Name = "tssSeparatorMid";
             this.tssSeparatorMid.Padding = new System.Windows.Forms.Padding(1);
@@ -100,17 +99,13 @@ namespace AshV.WebApiTester.XTB
             // splitContainerRoot
             // 
             this.splitContainerRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerRoot.Location = new System.Drawing.Point(0, 31);
+            this.splitContainerRoot.Location = new System.Drawing.Point(0, 27);
             this.splitContainerRoot.Name = "splitContainerRoot";
             this.splitContainerRoot.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerRoot.Panel1
             // 
-            this.splitContainerRoot.Panel1.Controls.Add(this.lblSize);
-            this.splitContainerRoot.Panel1.Controls.Add(this.lblTime);
-            this.splitContainerRoot.Panel1.Controls.Add(this.lblStatusMessage);
-            this.splitContainerRoot.Panel1.Controls.Add(this.lblStatusCode);
-            this.splitContainerRoot.Panel1.Controls.Add(this.lblVersion);
+            this.splitContainerRoot.Panel1.BackColor = System.Drawing.Color.White;
             this.splitContainerRoot.Panel1.Controls.Add(this.txtRequestUri);
             this.splitContainerRoot.Panel1.Controls.Add(this.btnSend);
             this.splitContainerRoot.Panel1.Controls.Add(this.cmbMethod);
@@ -118,54 +113,9 @@ namespace AshV.WebApiTester.XTB
             // splitContainerRoot.Panel2
             // 
             this.splitContainerRoot.Panel2.Controls.Add(this.tabReqestResponse);
-            this.splitContainerRoot.Size = new System.Drawing.Size(907, 666);
-            this.splitContainerRoot.SplitterDistance = 230;
+            this.splitContainerRoot.Size = new System.Drawing.Size(907, 670);
+            this.splitContainerRoot.SplitterDistance = 227;
             this.splitContainerRoot.TabIndex = 5;
-            // 
-            // lblSize
-            // 
-            this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(20, 138);
-            this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(49, 17);
-            this.lblSize.TabIndex = 7;
-            this.lblSize.Text = "lblSize";
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(20, 114);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(53, 17);
-            this.lblTime.TabIndex = 6;
-            this.lblTime.Text = "lblTime";
-            // 
-            // lblStatusMessage
-            // 
-            this.lblStatusMessage.AutoSize = true;
-            this.lblStatusMessage.Location = new System.Drawing.Point(20, 89);
-            this.lblStatusMessage.Name = "lblStatusMessage";
-            this.lblStatusMessage.Size = new System.Drawing.Size(119, 17);
-            this.lblStatusMessage.TabIndex = 5;
-            this.lblStatusMessage.Text = "lblStatusMessage";
-            // 
-            // lblStatusCode
-            // 
-            this.lblStatusCode.AutoSize = true;
-            this.lblStatusCode.Location = new System.Drawing.Point(20, 65);
-            this.lblStatusCode.Name = "lblStatusCode";
-            this.lblStatusCode.Size = new System.Drawing.Size(95, 17);
-            this.lblStatusCode.TabIndex = 4;
-            this.lblStatusCode.Text = "lblStatusCode";
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(20, 42);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(70, 17);
-            this.lblVersion.TabIndex = 3;
-            this.lblVersion.Text = "lblVersion";
             // 
             // txtRequestUri
             // 
@@ -176,18 +126,19 @@ namespace AshV.WebApiTester.XTB
             this.txtRequestUri.Multiline = true;
             this.txtRequestUri.Name = "txtRequestUri";
             this.txtRequestUri.Size = new System.Drawing.Size(690, 182);
-            this.txtRequestUri.TabIndex = 2;
+            this.txtRequestUri.TabIndex = 1;
             this.txtRequestUri.Text = resources.GetString("txtRequestUri.Text");
             // 
             // btnSend
             // 
+            this.btnSend.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSend.BackColor = System.Drawing.Color.Purple;
             this.btnSend.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSend.ForeColor = System.Drawing.Color.White;
-            this.btnSend.Location = new System.Drawing.Point(14, 160);
+            this.btnSend.Location = new System.Drawing.Point(14, 153);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(182, 36);
-            this.btnSend.TabIndex = 1;
+            this.btnSend.Size = new System.Drawing.Size(182, 43);
+            this.btnSend.TabIndex = 0;
             this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = false;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
@@ -202,12 +153,12 @@ namespace AshV.WebApiTester.XTB
             this.cmbMethod.Items.AddRange(new object[] {
             "GET",
             "POST",
-            "PUT",
+            "PATCH",
             "DELETE"});
             this.cmbMethod.Location = new System.Drawing.Point(14, 14);
             this.cmbMethod.Name = "cmbMethod";
             this.cmbMethod.Size = new System.Drawing.Size(182, 24);
-            this.cmbMethod.TabIndex = 0;
+            this.cmbMethod.TabIndex = 2;
             // 
             // tabReqestResponse
             // 
@@ -321,13 +272,18 @@ namespace AshV.WebApiTester.XTB
             // 
             // lblOrgUrl
             // 
-            this.lblOrgUrl.BackColor = System.Drawing.SystemColors.Control;
+            this.lblOrgUrl.BackColor = System.Drawing.Color.Transparent;
             this.lblOrgUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrgUrl.Location = new System.Drawing.Point(202, 5);
+            this.lblOrgUrl.Location = new System.Drawing.Point(198, 0);
             this.lblOrgUrl.Name = "lblOrgUrl";
-            this.lblOrgUrl.Size = new System.Drawing.Size(690, 19);
+            this.lblOrgUrl.Size = new System.Drawing.Size(675, 19);
             this.lblOrgUrl.TabIndex = 0;
             this.lblOrgUrl.Text = "lblOrgUrl";
+            // 
+            // timerSendButton
+            // 
+            this.timerSendButton.Interval = 5000;
+            this.timerSendButton.Tick += new System.EventHandler(this.timerSendButton_Tick);
             // 
             // WebApiTesterControl
             // 
@@ -380,13 +336,9 @@ namespace AshV.WebApiTester.XTB
         private System.Windows.Forms.TextBox txtRequestUri;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ComboBox cmbMethod;
-        private System.Windows.Forms.Label lblSize;
-        private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblStatusMessage;
-        private System.Windows.Forms.Label lblStatusCode;
-        private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Label lblOrgUrl;
         private System.Windows.Forms.TextBox txtRequestBody;
         private System.Windows.Forms.TextBox txtResponseBody;
+        private System.Windows.Forms.Timer timerSendButton;
     }
 }

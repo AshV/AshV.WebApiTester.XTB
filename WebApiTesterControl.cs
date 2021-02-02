@@ -105,6 +105,9 @@ namespace AshV.WebApiTester.XTB
                     var result = cr.Response;
                     if (result != null)
                     {
+                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
+                        btnSend.Text = result.IsSuccessStatusCode ? "Success!" : "Failed!";
+                        //Set response body tab as active
                         tabReqestResponse.SelectedIndex = 1;
                         tabResponseChild.SelectedIndex = 0;
 
@@ -116,12 +119,8 @@ namespace AshV.WebApiTester.XTB
                             FormatXml(cr.ResponseBody) :
                             cr.ResponseBody;
 
-                        lblOrgUrl.Text = $"Connected to : {cr.Endpoint}";
-                        lblSize.Text = $"Size : {cr.Size / 1024} kb";
-                        lblStatusCode.Text = $"Status Code : {(int)result.StatusCode}";
-                        lblStatusMessage.Text = $"Status : {result.StatusCode}";
-                        lblTime.Text = $"Time : {cr.TimeSpent} s";
-                        lblVersion.Text = $"Api : v{cr.ApiVersion}";
+                        lblOrgUrl.Text = $"Connected to : {cr.Endpoint}  🌐 {(int)result.StatusCode} {result.StatusCode}  📚 {cr.Size / 1024} kb  🕙 {cr.TimeSpent} second(s)";
+                        MessageBox.Show(lblOrgUrl.Text);
                     }
                 }
             });
@@ -221,6 +220,7 @@ namespace AshV.WebApiTester.XTB
 
         private void btnSend_Click(object sender, EventArgs e)
         {
+            timerSendButton.Start();
             btnSend.Enabled = false;
             ExecuteMethod(ExecuteWebApiRequest);
         }
@@ -247,8 +247,6 @@ namespace AshV.WebApiTester.XTB
 
         internal void InitCustomStyle()
         {
-            btnSend.Focus();
-
             cmbMethod.SelectedIndex = 0;
 
             tabReqestResponse.Dock = DockStyle.Fill;
@@ -262,11 +260,6 @@ namespace AshV.WebApiTester.XTB
             txtRequestBody.ScrollBars = ScrollBars.Vertical;
 
             lblOrgUrl.Text = "";
-            lblSize.Text = "";
-            lblStatusCode.Text = "";
-            lblStatusMessage.Text = "";
-            lblTime.Text = "";
-            lblVersion.Text = "";
         }
 
         /// <summary>
@@ -287,6 +280,12 @@ namespace AshV.WebApiTester.XTB
             }
 
             return builder.ToString();
+        }
+
+        private void timerSendButton_Tick(object sender, EventArgs e)
+        {
+            btnSend.Enabled = true;
+            timerSendButton.Stop();
         }
     }
 }
