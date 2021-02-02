@@ -105,8 +105,8 @@ namespace AshV.WebApiTester.XTB
                     var result = cr.Response;
                     if (result != null)
                     {
-                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
-                        btnSend.Text = result.IsSuccessStatusCode ? "Success!" : "Failed!";
+                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
+                        var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
                         //Set response body tab as active
                         tabReqestResponse.SelectedIndex = 1;
                         tabResponseChild.SelectedIndex = 0;
@@ -119,8 +119,8 @@ namespace AshV.WebApiTester.XTB
                             FormatXml(cr.ResponseBody) :
                             cr.ResponseBody;
 
-                        lblOrgUrl.Text = $"Connected to : {cr.Endpoint}  🌐 {(int)result.StatusCode} {result.StatusCode}  📚 {cr.Size / 1024} kb  🕙 {cr.TimeSpent} second(s)";
-                        MessageBox.Show(lblOrgUrl.Text);
+                        lblMain.ForeColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
+                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n\n📚 {cr.Size / 1024} KB(s)\n\n🎬 {cr.StartedAt.ToString("h:mm:ss tt")}\n⌛ {cr.TimeSpent} ms\n🏁 {cr.FinishedAt.ToString("h:mm:ss tt")}";
                     }
                 }
             });
@@ -161,6 +161,8 @@ namespace AshV.WebApiTester.XTB
             }
             var token = csc.CurrentAccessToken;
             var cr = new CustomResponse();
+            cr.StartedAt = DateTime.Now;
+
             var client = new HttpClient();
             cr.Endpoint = $"https://{csc.CrmConnectOrgUriActual.Host}/api/data/v{csc.ConnectedOrgVersion}/";
             cr.ApiVersion = csc.ConnectedOrgVersion.ToString();
@@ -174,21 +176,15 @@ namespace AshV.WebApiTester.XTB
                     "application/json");
             }
 
-
             var timer = new Stopwatch();
             timer.Start();
             var response = client.SendAsync(msg).Result;
-            timer.Stop();
-
-            cr.Response = response;
-            cr.TimeSpentHead = timer.Elapsed.TotalSeconds;
-
-            timer.Start();
             var responseBody = response.Content.ReadAsStringAsync().Result;
             timer.Stop();
+            cr.TimeSpent = timer.ElapsedMilliseconds;
+            cr.FinishedAt = DateTime.Now;
 
-            cr.TimeSpentBody = timer.Elapsed.TotalSeconds;
-            cr.TimeSpent = cr.TimeSpentHead + cr.TimeSpentBody;
+            cr.Response = response;
             cr.ResponseBody = responseBody;
 
             cr.ContentSize = responseBody.LongCount();
@@ -237,8 +233,12 @@ namespace AshV.WebApiTester.XTB
                 //if (!(myControl is Button) || !(myControl is ComboBox))
                 //    myControl.BackColor = Color.White;
 
-                if (myControl is TextBox || myControl is System.Windows.Forms.Label)
-                    myControl.ForeColor = Color.Purple;
+                if (myControl is TextBox)
+                {
+                    var txtBox = (TextBox)myControl;
+                    txtBox.ForeColor = Color.Purple;
+                    txtBox.BorderStyle = BorderStyle.FixedSingle;
+                }
 
                 foreach (Control subC in myControl.Controls)
                     UpdateColorControls(subC);
@@ -247,6 +247,11 @@ namespace AshV.WebApiTester.XTB
 
         internal void InitCustomStyle()
         {
+            timerLogoRemove.Start();
+
+            splitContainer1.SplitterDistance = 80;
+            splitContainerRoot.SplitterDistance = 100;
+
             cmbMethod.SelectedIndex = 0;
 
             tabReqestResponse.Dock = DockStyle.Fill;
@@ -258,8 +263,6 @@ namespace AshV.WebApiTester.XTB
             txtResponseBody.ScrollBars = ScrollBars.Vertical;
             txtRequestUri.ScrollBars = ScrollBars.Vertical;
             txtRequestBody.ScrollBars = ScrollBars.Vertical;
-
-            lblOrgUrl.Text = "";
         }
 
         /// <summary>
@@ -286,6 +289,11 @@ namespace AshV.WebApiTester.XTB
         {
             btnSend.Enabled = true;
             timerSendButton.Stop();
+        }
+
+        private void timerLogoRemove_Tick(object sender, EventArgs e)
+        {
+            splitContainer1.Panel1.Controls.Remove(pictureBoxLogo);
         }
     }
 }

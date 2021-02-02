@@ -18,8 +18,6 @@ namespace AshV.WebApiTester.XTB
         public string ApiVersion { get; set; }
 
         public double TimeSpent { get; set; }
-        public double TimeSpentHead { get; set; }
-        public double TimeSpentBody { get; set; }
 
         public Dictionary<string, List<string>> Headers { get; set; }
         public Dictionary<string, List<string>> ResponseHeaders { get; set; }
@@ -28,5 +26,8 @@ namespace AshV.WebApiTester.XTB
         public long Size { get; set; }
         public long ResponseSize { get; set; }
         public long ContentSize { get; set; }
+
+        public DateTime StartedAt { get; set; }
+        public DateTime FinishedAt { get; set; }
     }
 }
