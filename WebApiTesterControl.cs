@@ -105,8 +105,6 @@ namespace AshV.WebApiTester.XTB
                     var result = cr.Response;
                     if (result != null)
                     {
-                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
-                        var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
                         //Set response body tab as active
                         tabReqestResponse.SelectedIndex = 1;
                         tabResponseChild.SelectedIndex = 0;
@@ -119,12 +117,19 @@ namespace AshV.WebApiTester.XTB
                             FormatXml(cr.ResponseBody) :
                             cr.ResponseBody;
 
+                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
+                        var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
                         lblMain.ForeColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
-                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n\n📚 {cr.Size / 1024} KB(s)\n\n🎬 {cr.StartedAt.ToString("h:mm:ss tt")}\n⌛ {cr.TimeSpent} ms\n🏁 {cr.FinishedAt.ToString("h:mm:ss tt")}";
+                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
+
+                        dgvResponseHeaders.DataSource = cr.Headers;
+                        dgvResponseHeaders.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        dgvResponseHeaders.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        dgvResponseHeaders.Columns[0].SortMode = DataGridViewColumnSortMode.Automatic;
+                        dgvResponseHeaders.Columns[1].SortMode = DataGridViewColumnSortMode.Automatic;
                     }
                 }
             });
-            btnSend.Enabled = true;
         }
 
         /// <summary>
@@ -161,6 +166,7 @@ namespace AshV.WebApiTester.XTB
             }
             var token = csc.CurrentAccessToken;
             var cr = new CustomResponse();
+            cr.Headers = new List<KeyValuePair<string, string>>();
             cr.StartedAt = DateTime.Now;
 
             var client = new HttpClient();
@@ -191,27 +197,25 @@ namespace AshV.WebApiTester.XTB
             cr.ResponseSize = (long)response.Content.Headers.ContentLength;
             cr.Size = cr.ResponseSize + cr.ContentSize;
 
-            return cr;
-            /* Header logic
-           MessageBox.Show(result.Content.Headers.ContentLength?.ToString());
-           MessageBox.Show(result.Headers.ToString().Length.ToString());
+            var list = "";
+            var header = response.Headers;
+            var h = header.GetEnumerator();
+            do
+            {
+                list += h.Current.Key + " : " + JsonConvert.SerializeObject(h.Current.Value) + Environment.NewLine;
+                cr.Headers.Add(new KeyValuePair<string, string>(h.Current.Key, JsonConvert.SerializeObject(h.Current.Value)));
+            } while (h.MoveNext());
+            list += "------------------" + Environment.NewLine;
+            var header1 = response.Content.Headers;
+            var h1 = header1.GetEnumerator();
+            do
+            {
+                list += h1.Current.Key + " : " + JsonConvert.SerializeObject(h1.Current.Value) + Environment.NewLine;
+                cr.Headers.Add(new KeyValuePair<string, string>(h.Current.Key, JsonConvert.SerializeObject(h.Current.Value)));
+            } while (h1.MoveNext());
+            cr.Headers.RemoveAll((a) => { return string.IsNullOrWhiteSpace(a.Key); });
 
-           var list = "";
-           var header = result.Headers;
-           var h = header.GetEnumerator();
-           do
-           {
-               list += h.Current.Key + " : " + JsonConvert.SerializeObject(h.Current.Value) + Environment.NewLine;
-           } while (h.MoveNext());
-           list += "------------------" + Environment.NewLine;
-           var header1 = result.Content.Headers;
-           var h1 = header1.GetEnumerator();
-           do
-           {
-               list += h1.Current.Key + " : " + JsonConvert.SerializeObject(h1.Current.Value) + Environment.NewLine;
-           } while (h1.MoveNext());
-           textBox1.Text = list;
-            End Header Logic */
+            return cr;
         }
 
         private void btnSend_Click(object sender, EventArgs e)

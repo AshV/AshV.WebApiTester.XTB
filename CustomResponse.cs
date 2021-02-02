@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -19,9 +20,7 @@ namespace AshV.WebApiTester.XTB
 
         public double TimeSpent { get; set; }
 
-        public Dictionary<string, List<string>> Headers { get; set; }
-        public Dictionary<string, List<string>> ResponseHeaders { get; set; }
-        public Dictionary<string, List<string>> ContentHeaders { get; set; }
+        public List<KeyValuePair<string,string>> Headers { get; set; }
 
         public long Size { get; set; }
         public long ResponseSize { get; set; }

@@ -55,6 +55,7 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
             this.timerSendButton = new System.Windows.Forms.Timer(this.components);
             this.timerLogoRemove = new System.Windows.Forms.Timer(this.components);
+            this.dgvResponseHeaders = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -73,6 +74,8 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponse.SuspendLayout();
             this.tabResponseChild.SuspendLayout();
             this.tabPageResponseBody.SuspendLayout();
+            this.tabPageResponseHeaders.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerRoot
@@ -113,6 +116,7 @@ namespace AshV.WebApiTester.XTB
             this.splitContainer1.Panel2.Controls.Add(this.txtRequestUri);
             this.splitContainer1.Size = new System.Drawing.Size(907, 234);
             this.splitContainer1.SplitterDistance = 262;
+            this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 3;
             // 
             // lblMain
@@ -176,7 +180,7 @@ namespace AshV.WebApiTester.XTB
             this.txtRequestUri.Location = new System.Drawing.Point(0, 0);
             this.txtRequestUri.Multiline = true;
             this.txtRequestUri.Name = "txtRequestUri";
-            this.txtRequestUri.Size = new System.Drawing.Size(641, 234);
+            this.txtRequestUri.Size = new System.Drawing.Size(635, 234);
             this.txtRequestUri.TabIndex = 1;
             this.txtRequestUri.Text = resources.GetString("txtRequestUri.Text");
             // 
@@ -319,6 +323,7 @@ namespace AshV.WebApiTester.XTB
             // 
             // tabPageResponseHeaders
             // 
+            this.tabPageResponseHeaders.Controls.Add(this.dgvResponseHeaders);
             this.tabPageResponseHeaders.Location = new System.Drawing.Point(4, 25);
             this.tabPageResponseHeaders.Name = "tabPageResponseHeaders";
             this.tabPageResponseHeaders.Padding = new System.Windows.Forms.Padding(3);
@@ -334,8 +339,22 @@ namespace AshV.WebApiTester.XTB
             // 
             // timerLogoRemove
             // 
-            this.timerLogoRemove.Interval = 5100;
+            this.timerLogoRemove.Interval = 1100;
             this.timerLogoRemove.Tick += new System.EventHandler(this.timerLogoRemove_Tick);
+            // 
+            // dgvResponseHeaders
+            // 
+            this.dgvResponseHeaders.AllowUserToAddRows = false;
+            this.dgvResponseHeaders.AllowUserToDeleteRows = false;
+            this.dgvResponseHeaders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResponseHeaders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvResponseHeaders.Location = new System.Drawing.Point(3, 3);
+            this.dgvResponseHeaders.Name = "dgvResponseHeaders";
+            this.dgvResponseHeaders.ReadOnly = true;
+            this.dgvResponseHeaders.RowHeadersWidth = 51;
+            this.dgvResponseHeaders.RowTemplate.Height = 24;
+            this.dgvResponseHeaders.Size = new System.Drawing.Size(791, 249);
+            this.dgvResponseHeaders.TabIndex = 0;
             // 
             // WebApiTesterControl
             // 
@@ -370,6 +389,8 @@ namespace AshV.WebApiTester.XTB
             this.tabResponseChild.ResumeLayout(false);
             this.tabPageResponseBody.ResumeLayout(false);
             this.tabPageResponseBody.PerformLayout();
+            this.tabPageResponseHeaders.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -399,5 +420,6 @@ namespace AshV.WebApiTester.XTB
         private System.Windows.Forms.Label lblMain;
         private System.Windows.Forms.PictureBox pictureBoxLogo;
         private System.Windows.Forms.Timer timerLogoRemove;
+        private System.Windows.Forms.DataGridView dgvResponseHeaders;
     }
 }
