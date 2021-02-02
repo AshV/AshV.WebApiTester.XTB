@@ -53,9 +53,9 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseBody = new System.Windows.Forms.TabPage();
             this.txtResponseBody = new System.Windows.Forms.TextBox();
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
+            this.dgvResponseHeaders = new System.Windows.Forms.DataGridView();
             this.timerSendButton = new System.Windows.Forms.Timer(this.components);
             this.timerLogoRemove = new System.Windows.Forms.Timer(this.components);
-            this.dgvResponseHeaders = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -123,6 +123,7 @@ namespace AshV.WebApiTester.XTB
             // 
             this.lblMain.AutoSize = true;
             this.lblMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMain.Location = new System.Drawing.Point(0, 24);
             this.lblMain.Name = "lblMain";
             this.lblMain.Size = new System.Drawing.Size(0, 17);
@@ -332,16 +333,6 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseHeaders.Text = "Response Headers";
             this.tabPageResponseHeaders.UseVisualStyleBackColor = true;
             // 
-            // timerSendButton
-            // 
-            this.timerSendButton.Interval = 2100;
-            this.timerSendButton.Tick += new System.EventHandler(this.timerSendButton_Tick);
-            // 
-            // timerLogoRemove
-            // 
-            this.timerLogoRemove.Interval = 1100;
-            this.timerLogoRemove.Tick += new System.EventHandler(this.timerLogoRemove_Tick);
-            // 
             // dgvResponseHeaders
             // 
             this.dgvResponseHeaders.AllowUserToAddRows = false;
@@ -355,6 +346,16 @@ namespace AshV.WebApiTester.XTB
             this.dgvResponseHeaders.RowTemplate.Height = 24;
             this.dgvResponseHeaders.Size = new System.Drawing.Size(791, 249);
             this.dgvResponseHeaders.TabIndex = 0;
+            // 
+            // timerSendButton
+            // 
+            this.timerSendButton.Interval = 2100;
+            this.timerSendButton.Tick += new System.EventHandler(this.timerSendButton_Tick);
+            // 
+            // timerLogoRemove
+            // 
+            this.timerLogoRemove.Interval = 1100;
+            this.timerLogoRemove.Tick += new System.EventHandler(this.timerLogoRemove_Tick);
             // 
             // WebApiTesterControl
             // 

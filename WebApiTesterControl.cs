@@ -122,6 +122,15 @@ namespace AshV.WebApiTester.XTB
                         lblMain.ForeColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
                         lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
 
+                        if (cr.ResponseBody.StartsWith("{"))
+                        {
+                            var j = JsonConvert.DeserializeObject<GetMultpleResponse>(cr.ResponseBody);
+                            if (!(j.value is null))
+                            {
+                                lblMain.Text += $"\n\n🎬 {j.value.Count()} Records!";
+                            }
+                        }
+
                         dgvResponseHeaders.DataSource = cr.Headers;
                         dgvResponseHeaders.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         dgvResponseHeaders.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -242,6 +251,7 @@ namespace AshV.WebApiTester.XTB
                     var txtBox = (TextBox)myControl;
                     txtBox.ForeColor = Color.Purple;
                     txtBox.BorderStyle = BorderStyle.FixedSingle;
+                    txtBox.Font = new System.Drawing.Font("Verdana", 9);
                 }
 
                 foreach (Control subC in myControl.Controls)
