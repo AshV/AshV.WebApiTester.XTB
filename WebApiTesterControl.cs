@@ -42,6 +42,7 @@ namespace AshV.WebApiTester.XTB
         {
             ApplyTheme(this);
             InitCustomStyle();
+            RequestHeaders();
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -83,7 +84,10 @@ namespace AshV.WebApiTester.XTB
                                 args.Result = RequestHelper(csc, new HttpMethod("PATCH"), txtRequestUri.Text, txtRequestBody.Text);
                                 break;
                             case "DELETE":
-                                args.Result = RequestHelper(csc, HttpMethod.Delete, txtRequestUri.Text, txtRequestBody.Text);
+                                args.Result = RequestHelper(csc, HttpMethod.Delete, txtRequestUri.Text);
+                                break;
+                            case "PUT":
+                                args.Result = RequestHelper(csc, HttpMethod.Put, txtRequestUri.Text, txtRequestBody.Text);
                                 break;
                             default:
                                 ShowErrorNotification("Request is not proper!", null);
@@ -308,6 +312,22 @@ namespace AshV.WebApiTester.XTB
         private void timerLogoRemove_Tick(object sender, EventArgs e)
         {
             splitContainer1.Panel1.Controls.Remove(pictureBoxLogo);
+        }
+
+        internal void RequestHeaders()
+        {
+            var listHeaders = new List<Tuple<bool, string, string>>() {
+                new Tuple<bool,string,string>(true,"Accept","application/json"),
+                new Tuple<bool,string,string>(true,"OData-MaxVersion","4.0"),
+                new Tuple<bool,string,string>(true,"OData-Version","4.0"),
+                new Tuple<bool,string,string>(true,"If-None-Match","null"),
+                new Tuple<bool,string,string>(true,"Content-Type","application/json"),
+            };
+
+            listHeaders.ForEach(row =>
+            {
+                dgvRequestHeaders.Rows.Add(row.Item1, row.Item2, row.Item3);
+            });
         }
     }
 }
