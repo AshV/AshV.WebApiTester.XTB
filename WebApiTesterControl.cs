@@ -1,5 +1,6 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -71,7 +72,21 @@ namespace AshV.WebApiTester.XTB
                         switch (cmbMethod.SelectedItem.ToString())
                         {
                             case "GET":
-                                args.Result = RequestHelper(csc, HttpMethod.Get, txtRequestUri.Text);
+                                if (txtRequestUri.Text.StartsWith("<fetch"))
+                                {
+                                    if (MessageBox.Show("Direct <fetchXml/> Execution is not supported yet. To see how to Execute <fetchXml/> using WebAPI, Please follow the link.", "Visit", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                                    {
+                                        System.Diagnostics.Process.Start("https://www.ashishvishwakarma.com/Execute-fetchXml-WebAPI-Dynamics-365-Using-JavaScript-Example/");
+                                    }
+
+                                    //var result = Service.RetrieveMultiple(new FetchExpression(txtRequestUri.Text));
+                                    //dgvResponseTable.DataSource = result?.Entities;
+                                    args.Result = new CustomResponse();
+                                }
+                                else
+                                {
+                                    args.Result = RequestHelper(csc, HttpMethod.Get, txtRequestUri.Text);
+                                }
                                 break;
 
                             case "POST":
