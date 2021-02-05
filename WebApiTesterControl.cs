@@ -1,25 +1,21 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using XrmToolBox.Extensibility;
-using ScintillaNET;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using XrmToolBox.Extensibility.Interfaces;
 using System.Xml;
-using System.IO;
+using XrmToolBox.Extensibility;
+using XrmToolBox.Extensibility.Interfaces;
 
 namespace AshV.WebApiTester.XTB
 {
@@ -77,18 +73,23 @@ namespace AshV.WebApiTester.XTB
                             case "GET":
                                 args.Result = RequestHelper(csc, HttpMethod.Get, txtRequestUri.Text);
                                 break;
+
                             case "POST":
                                 args.Result = RequestHelper(csc, HttpMethod.Post, txtRequestUri.Text, txtRequestBody.Text);
                                 break;
+
                             case "PATCH":
                                 args.Result = RequestHelper(csc, new HttpMethod("PATCH"), txtRequestUri.Text, txtRequestBody.Text);
                                 break;
+
                             case "DELETE":
                                 args.Result = RequestHelper(csc, HttpMethod.Delete, txtRequestUri.Text);
                                 break;
+
                             case "PUT":
                                 args.Result = RequestHelper(csc, HttpMethod.Put, txtRequestUri.Text, txtRequestBody.Text);
                                 break;
+
                             default:
                                 ShowErrorNotification("Request is not proper!", null);
                                 break;
@@ -121,10 +122,10 @@ namespace AshV.WebApiTester.XTB
                             FormatXml(cr.ResponseBody) :
                             cr.ResponseBody;
 
-                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
+                        btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
                         var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
                         lblMain.ForeColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
-                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
+                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
 
                         if (cr.ResponseBody.StartsWith("{"))
                         {
@@ -132,6 +133,8 @@ namespace AshV.WebApiTester.XTB
                             if (!(j.value is null))
                             {
                                 lblMain.Text += $"\n\n🎬 {j.value.Count()} Records!";
+                                dgvResponseTable.DataSource = ToDataTable(j.value);
+                                tabResponseChild.SelectedIndex = 1;
                             }
                         }
 
@@ -324,10 +327,40 @@ namespace AshV.WebApiTester.XTB
                 new Tuple<bool,string,string>(true,"Content-Type","application/json"),
             };
 
+            var testD = new List<dynamic>();
+
             listHeaders.ForEach(row =>
             {
                 dgvRequestHeaders.Rows.Add(row.Item1, row.Item2, row.Item3);
             });
+        }
+
+        public DataTable ToDataTable(IEnumerable<dynamic> items)
+        {
+            var data = items.ToArray();
+            if (data.Count() == 0) return null;
+
+            var colList = new List<string>();
+            var dt = new DataTable();
+            foreach (var i in data)
+            {
+                DataRow row = dt.NewRow();
+                foreach (var j in i)
+                {
+                    var k = Convert.ToString(j.Path);
+                    var v = Convert.ToString(j.Value);
+
+                    if (!colList.Contains(k))
+                    {
+                        dt.Columns.Add(k, typeof(string));
+                        colList.Add(k);
+                    }
+                    row[k] = v;
+                }
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
     }
 }

@@ -45,6 +45,9 @@ namespace AshV.WebApiTester.XTB
             this.txtRequestBody = new System.Windows.Forms.TextBox();
             this.tabPageRequestHeaders = new System.Windows.Forms.TabPage();
             this.dgvRequestHeaders = new System.Windows.Forms.DataGridView();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.HeaderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageResponse = new System.Windows.Forms.TabPage();
             this.tabResponseChild = new System.Windows.Forms.TabControl();
             this.tabPageResponseBody = new System.Windows.Forms.TabPage();
@@ -53,9 +56,8 @@ namespace AshV.WebApiTester.XTB
             this.dgvResponseHeaders = new System.Windows.Forms.DataGridView();
             this.timerSendButton = new System.Windows.Forms.Timer(this.components);
             this.timerLogoRemove = new System.Windows.Forms.Timer(this.components);
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.HeaderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageResponseTable = new System.Windows.Forms.TabPage();
+            this.dgvResponseTable = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -76,6 +78,8 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseBody.SuspendLayout();
             this.tabPageResponseHeaders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).BeginInit();
+            this.tabPageResponseTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseTable)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerRoot
@@ -262,6 +266,33 @@ namespace AshV.WebApiTester.XTB
             this.dgvRequestHeaders.Size = new System.Drawing.Size(729, 210);
             this.dgvRequestHeaders.TabIndex = 0;
             // 
+            // Select
+            // 
+            this.Select.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Select.HeaderText = "";
+            this.Select.MinimumWidth = 6;
+            this.Select.Name = "Select";
+            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Select.ToolTipText = "Select the headers to pass along with request.";
+            this.Select.Width = 75;
+            // 
+            // HeaderName
+            // 
+            this.HeaderName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.HeaderName.HeaderText = "Header Name";
+            this.HeaderName.MinimumWidth = 6;
+            this.HeaderName.Name = "HeaderName";
+            this.HeaderName.ToolTipText = "HTTP Header Name";
+            this.HeaderName.Width = 125;
+            // 
+            // HeaderValue
+            // 
+            this.HeaderValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.HeaderValue.HeaderText = "Header Value";
+            this.HeaderValue.MinimumWidth = 6;
+            this.HeaderValue.Name = "HeaderValue";
+            this.HeaderValue.ToolTipText = "HTTP Header Value";
+            // 
             // tabPageResponse
             // 
             this.tabPageResponse.Controls.Add(this.tabResponseChild);
@@ -276,6 +307,7 @@ namespace AshV.WebApiTester.XTB
             // tabResponseChild
             // 
             this.tabResponseChild.Controls.Add(this.tabPageResponseBody);
+            this.tabResponseChild.Controls.Add(this.tabPageResponseTable);
             this.tabResponseChild.Controls.Add(this.tabPageResponseHeaders);
             this.tabResponseChild.Location = new System.Drawing.Point(24, 19);
             this.tabResponseChild.Name = "tabResponseChild";
@@ -337,32 +369,26 @@ namespace AshV.WebApiTester.XTB
             this.timerLogoRemove.Interval = 1100;
             this.timerLogoRemove.Tick += new System.EventHandler(this.timerLogoRemove_Tick);
             // 
-            // Select
+            // tabPageResponseTable
             // 
-            this.Select.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Select.HeaderText = "";
-            this.Select.MinimumWidth = 6;
-            this.Select.Name = "Select";
-            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Select.ToolTipText = "Select the headers to pass along with request.";
-            this.Select.Width = 75;
+            this.tabPageResponseTable.Controls.Add(this.dgvResponseTable);
+            this.tabPageResponseTable.Location = new System.Drawing.Point(4, 25);
+            this.tabPageResponseTable.Name = "tabPageResponseTable";
+            this.tabPageResponseTable.Size = new System.Drawing.Size(797, 255);
+            this.tabPageResponseTable.TabIndex = 2;
+            this.tabPageResponseTable.Text = "Response As Table";
+            this.tabPageResponseTable.UseVisualStyleBackColor = true;
             // 
-            // HeaderName
+            // dgvResponseTable
             // 
-            this.HeaderName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.HeaderName.HeaderText = "Header Name";
-            this.HeaderName.MinimumWidth = 6;
-            this.HeaderName.Name = "HeaderName";
-            this.HeaderName.ToolTipText = "HTTP Header Name";
-            this.HeaderName.Width = 125;
-            // 
-            // HeaderValue
-            // 
-            this.HeaderValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.HeaderValue.HeaderText = "Header Value";
-            this.HeaderValue.MinimumWidth = 6;
-            this.HeaderValue.Name = "HeaderValue";
-            this.HeaderValue.ToolTipText = "HTTP Header Value";
+            this.dgvResponseTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResponseTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvResponseTable.Location = new System.Drawing.Point(0, 0);
+            this.dgvResponseTable.Name = "dgvResponseTable";
+            this.dgvResponseTable.RowHeadersWidth = 51;
+            this.dgvResponseTable.RowTemplate.Height = 24;
+            this.dgvResponseTable.Size = new System.Drawing.Size(797, 255);
+            this.dgvResponseTable.TabIndex = 0;
             // 
             // WebApiTesterControl
             // 
@@ -399,6 +425,8 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponseBody.PerformLayout();
             this.tabPageResponseHeaders.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).EndInit();
+            this.tabPageResponseTable.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -429,5 +457,7 @@ namespace AshV.WebApiTester.XTB
         private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeaderName;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeaderValue;
+        private System.Windows.Forms.TabPage tabPageResponseTable;
+        private System.Windows.Forms.DataGridView dgvResponseTable;
     }
 }
