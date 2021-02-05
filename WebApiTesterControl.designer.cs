@@ -52,12 +52,12 @@ namespace AshV.WebApiTester.XTB
             this.tabResponseChild = new System.Windows.Forms.TabControl();
             this.tabPageResponseBody = new System.Windows.Forms.TabPage();
             this.txtResponseBody = new System.Windows.Forms.TextBox();
+            this.tabPageResponseTable = new System.Windows.Forms.TabPage();
+            this.dgvResponseTable = new System.Windows.Forms.DataGridView();
             this.tabPageResponseHeaders = new System.Windows.Forms.TabPage();
             this.dgvResponseHeaders = new System.Windows.Forms.DataGridView();
             this.timerSendButton = new System.Windows.Forms.Timer(this.components);
             this.timerLogoRemove = new System.Windows.Forms.Timer(this.components);
-            this.tabPageResponseTable = new System.Windows.Forms.TabPage();
-            this.dgvResponseTable = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -76,10 +76,10 @@ namespace AshV.WebApiTester.XTB
             this.tabPageResponse.SuspendLayout();
             this.tabResponseChild.SuspendLayout();
             this.tabPageResponseBody.SuspendLayout();
-            this.tabPageResponseHeaders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).BeginInit();
             this.tabPageResponseTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponseTable)).BeginInit();
+            this.tabPageResponseHeaders.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerRoot
@@ -334,6 +334,27 @@ namespace AshV.WebApiTester.XTB
             this.txtResponseBody.Size = new System.Drawing.Size(644, 151);
             this.txtResponseBody.TabIndex = 0;
             // 
+            // tabPageResponseTable
+            // 
+            this.tabPageResponseTable.Controls.Add(this.dgvResponseTable);
+            this.tabPageResponseTable.Location = new System.Drawing.Point(4, 25);
+            this.tabPageResponseTable.Name = "tabPageResponseTable";
+            this.tabPageResponseTable.Size = new System.Drawing.Size(797, 255);
+            this.tabPageResponseTable.TabIndex = 2;
+            this.tabPageResponseTable.Text = "Response As Table";
+            this.tabPageResponseTable.UseVisualStyleBackColor = true;
+            // 
+            // dgvResponseTable
+            // 
+            this.dgvResponseTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResponseTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvResponseTable.Location = new System.Drawing.Point(0, 0);
+            this.dgvResponseTable.Name = "dgvResponseTable";
+            this.dgvResponseTable.RowHeadersWidth = 51;
+            this.dgvResponseTable.RowTemplate.Height = 24;
+            this.dgvResponseTable.Size = new System.Drawing.Size(797, 255);
+            this.dgvResponseTable.TabIndex = 0;
+            // 
             // tabPageResponseHeaders
             // 
             this.tabPageResponseHeaders.Controls.Add(this.dgvResponseHeaders);
@@ -369,27 +390,6 @@ namespace AshV.WebApiTester.XTB
             this.timerLogoRemove.Interval = 1100;
             this.timerLogoRemove.Tick += new System.EventHandler(this.timerLogoRemove_Tick);
             // 
-            // tabPageResponseTable
-            // 
-            this.tabPageResponseTable.Controls.Add(this.dgvResponseTable);
-            this.tabPageResponseTable.Location = new System.Drawing.Point(4, 25);
-            this.tabPageResponseTable.Name = "tabPageResponseTable";
-            this.tabPageResponseTable.Size = new System.Drawing.Size(797, 255);
-            this.tabPageResponseTable.TabIndex = 2;
-            this.tabPageResponseTable.Text = "Response As Table";
-            this.tabPageResponseTable.UseVisualStyleBackColor = true;
-            // 
-            // dgvResponseTable
-            // 
-            this.dgvResponseTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResponseTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvResponseTable.Location = new System.Drawing.Point(0, 0);
-            this.dgvResponseTable.Name = "dgvResponseTable";
-            this.dgvResponseTable.RowHeadersWidth = 51;
-            this.dgvResponseTable.RowTemplate.Height = 24;
-            this.dgvResponseTable.Size = new System.Drawing.Size(797, 255);
-            this.dgvResponseTable.TabIndex = 0;
-            // 
             // WebApiTesterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -423,10 +423,10 @@ namespace AshV.WebApiTester.XTB
             this.tabResponseChild.ResumeLayout(false);
             this.tabPageResponseBody.ResumeLayout(false);
             this.tabPageResponseBody.PerformLayout();
-            this.tabPageResponseHeaders.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).EndInit();
             this.tabPageResponseTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvResponseTable)).EndInit();
+            this.tabPageResponseHeaders.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResponseHeaders)).EndInit();
             this.ResumeLayout(false);
 
         }

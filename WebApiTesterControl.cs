@@ -1,6 +1,5 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Tooling.Connector;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -106,13 +105,13 @@ namespace AshV.WebApiTester.XTB
                                 break;
 
                             default:
-                                ShowErrorNotification("Request is not proper!", null);
+                                MessageBox.Show("Request is not proper!");
                                 break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        ShowErrorNotification(ex.Message + " | " + ex?.InnerException?.Message, null);
+                        MessageBox.Show(ex.Message + " | " + ex?.InnerException?.Message);
                     }
                 },
                 PostWorkCallBack = (args) =>
@@ -188,11 +187,11 @@ namespace AshV.WebApiTester.XTB
             }
         }
 
-        internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null, Dictionary<string, List<string>> customHeaders = null, string contentType = null)
+        internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null)
         {
             if (!csc.IsReady)
             {
-                ShowErrorNotification("Service initiation failed! Try in a moment or restart the tool.", null);
+                MessageBox.Show("Service initiation failed! Try in a moment or restart the tool.", null);
                 return new CustomResponse();
             }
             var token = csc.CurrentAccessToken;
@@ -205,6 +204,13 @@ namespace AshV.WebApiTester.XTB
             cr.ApiVersion = csc.ConnectedOrgVersion.ToString();
             var msg = new HttpRequestMessage(method, cr.Endpoint + queryString);
             msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
+
+            var customHeaders = GetSelectedHeaders();
+            customHeaders.ForEach(kv =>
+            {
+                msg.Headers.TryAddWithoutValidation(kv.Key, kv.Value);
+            });
+
             if (!string.IsNullOrEmpty(body))
             {
                 msg.Content = new StringContent(
@@ -342,12 +348,28 @@ namespace AshV.WebApiTester.XTB
                 new Tuple<bool,string,string>(true,"Content-Type","application/json"),
             };
 
-            var testD = new List<dynamic>();
-
             listHeaders.ForEach(row =>
             {
                 dgvRequestHeaders.Rows.Add(row.Item1, row.Item2, row.Item3);
             });
+        }
+
+        internal List<KeyValuePair<string, string>> GetSelectedHeaders()
+        {
+            var list = new List<KeyValuePair<string, string>>();
+
+            for (int i = 0; i < dgvRequestHeaders.RowCount; i++)
+            {
+                if (Convert.ToBoolean(dgvRequestHeaders.Rows[i].Cells[0].Value))
+                {
+                    var key = Convert.ToString(dgvRequestHeaders.Rows[i].Cells[1].Value);
+                    var value = Convert.ToString(dgvRequestHeaders.Rows[i].Cells[2].Value);
+                    if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+                        list.Add(new KeyValuePair<string, string>(key, value));
+                }
+            }
+
+            return list;
         }
 
         public DataTable ToDataTable(IEnumerable<dynamic> items)
