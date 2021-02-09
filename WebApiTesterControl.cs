@@ -138,7 +138,7 @@ namespace AshV.WebApiTester.XTB
 
                         btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
                         var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
-                        lblMain.ForeColor = result.IsSuccessStatusCode ? Color.DarkGreen : Color.Red;
+                        lblMain.ForeColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
                         lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
 
                         if (cr.ResponseBody.StartsWith("{"))
@@ -258,6 +258,7 @@ namespace AshV.WebApiTester.XTB
         private void btnSend_Click(object sender, EventArgs e)
         {
             timerSendButton.Start();
+            GetReadyForNewResponse();
             btnSend.Enabled = false;
             ExecuteMethod(ExecuteWebApiRequest);
         }
@@ -398,6 +399,14 @@ namespace AshV.WebApiTester.XTB
             }
 
             return dt;
+        }
+
+        public void GetReadyForNewResponse()
+        {
+            btnSend.ForeColor = Color.Purple;
+            txtResponseBody.Text = "";
+            dgvResponseTable.DataSource = null;
+            lblMain.Text = "";
         }
     }
 }
