@@ -144,21 +144,19 @@
   &lt;/entity&gt;
 &lt;/fetch&gt;</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Select.UserAddedColumn" type="System.Boolean, mscorlib">
+  <metadata name="Select.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="HeaderName.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="HeaderName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="HeaderValue.UserAddedColumn" type="System.Boolean, mscorlib">
+  </metadata>
+  <metadata name="HeaderValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="timerSendButton.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="timerSendButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>28, 15</value>
-  </data>
-  <data name="timerLogoRemove.TrayLocation" type="System.Drawing.Point, System.Drawing">
+  </metadata>
+  <metadata name="timerLogoRemove.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>200, 15</value>
-  </data>
+  </metadata>
 </root>

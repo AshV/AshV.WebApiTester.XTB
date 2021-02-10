@@ -136,8 +136,7 @@ namespace AshV.WebApiTester.XTB
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
-            this.pictureBoxLogo.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.InitialImage")));
+            this.pictureBoxLogo.InitialImage = null;
             this.pictureBoxLogo.Location = new System.Drawing.Point(0, 24);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(262, 168);
