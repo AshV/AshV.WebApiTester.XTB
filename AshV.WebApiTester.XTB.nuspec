@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
+    <id>AshV.WebApiTester.XTB</id>
+    <version>0.1.0.3</version>
+    <title>✈ WebAPI Launcher</title>
+    <authors>Ashish Vishwakarma</authors>
+    <owners></owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/AshV/AshV.WebApiTester.XTB</projectUrl>
-    <description>$description$</description>
+    <iconUrl>https://raw.githubusercontent.com/AshV/AshV.WebApiTester.XTB/main/images/icon.ico</iconUrl>
+    <description>XrmToolBox plugin to execute and test Microsoft Dataverse/Dynamics WebAPIs</description>
+    <summary>Try out full fledged Dataverse WebAPI HTTP Request/Response right from XrmToolBox</summary>
     <releaseNotes>XrmToolBox plugin to execute and test Microsoft Dataverse/Dynamics WebAPIs</releaseNotes>
-    <copyright>$copyright$</copyright>
+    <copyright>Copyright ©  2021 AshV</copyright>
+    <language>en-IN</language>
     <tags>XrmToolBox Microsoft Dataverse Dynamics365 PowerPlatform WebAPITester APILauncher</tags>
+    <dependencies>
+      <dependency id="XrmToolBoxPackage" version="1.2020.12.43" />
+    </dependencies>
   </metadata>
 </package>
