@@ -40,6 +40,12 @@ namespace AshV.WebApiTester.XTB
             InitCustomStyle();
             RequestHeaders();
 
+            if (ConnectionDetail?.AuthType != null && ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation)
+            {
+                MessageBox.Show("Only OAuth Authenticated Connection is Supported!");
+                return;
+            }
+
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -60,6 +66,12 @@ namespace AshV.WebApiTester.XTB
 
         private void ExecuteWebApiRequest()
         {
+            if (ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation)
+            {
+                MessageBox.Show("Only OAuth Authenticated Connection is Supported!");
+                return;
+            }
+
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Executing WebAPI Request...",
@@ -189,6 +201,7 @@ namespace AshV.WebApiTester.XTB
 
         internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null)
         {
+            queryString = queryString.Replace("\n", "").Replace("\r", "");
             if (!csc.IsReady)
             {
                 MessageBox.Show("Service initiation failed! Try in a moment or restart the tool.", null);
@@ -403,7 +416,7 @@ namespace AshV.WebApiTester.XTB
 
         public void GetReadyForNewResponse()
         {
-            btnSend.ForeColor = Color.Purple;
+            btnSend.BackColor = Color.Purple;
             txtResponseBody.Text = "";
             dgvResponseTable.DataSource = null;
             lblMain.Text = "";

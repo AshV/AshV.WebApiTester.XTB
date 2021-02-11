@@ -136,6 +136,7 @@ namespace AshV.WebApiTester.XTB
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLogo.Image")));
             this.pictureBoxLogo.InitialImage = null;
             this.pictureBoxLogo.Location = new System.Drawing.Point(0, 24);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
@@ -187,7 +188,8 @@ namespace AshV.WebApiTester.XTB
             this.txtRequestUri.Name = "txtRequestUri";
             this.txtRequestUri.Size = new System.Drawing.Size(635, 234);
             this.txtRequestUri.TabIndex = 1;
-            this.txtRequestUri.Text = resources.GetString("txtRequestUri.Text");
+            this.txtRequestUri.Text = "accounts?$top=10\r\n&$select=name,emailaddress1,address1_line1,address1_city,addres" +
+    "s1_stateorprovince,address1_composite\r\n&$expand=primarycontactid";
             // 
             // tabReqestResponse
             // 
