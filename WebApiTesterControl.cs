@@ -40,11 +40,7 @@ namespace AshV.WebApiTester.XTB
             InitCustomStyle();
             RequestHeaders();
 
-            if (ConnectionDetail?.AuthType != null && ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation)
-            {
-                MessageBox.Show("Only OAuth Authenticated Connection is Supported!");
-                return;
-            }
+            if (!AuthTypeCheck()) return;
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -66,11 +62,7 @@ namespace AshV.WebApiTester.XTB
 
         private void ExecuteWebApiRequest()
         {
-            if (ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation)
-            {
-                MessageBox.Show("Only OAuth Authenticated Connection is Supported!");
-                return;
-            }
+            if (!AuthTypeCheck()) return;
 
             WorkAsync(new WorkAsyncInfo
             {
@@ -420,6 +412,21 @@ namespace AshV.WebApiTester.XTB
             txtResponseBody.Text = "";
             dgvResponseTable.DataSource = null;
             lblMain.Text = "";
+        }
+
+        public bool AuthTypeCheck()
+        {
+            if (ConnectionDetail?.AuthType != null &&
+                  ConnectionDetail?.NewAuthType != null &&
+                  ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation &&
+                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.AD &&
+                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.OAuth &&
+                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.ClientSecret)
+            {
+                MessageBox.Show("Your connection type is not supported, Please connect using SDK Login Control to use this Tool.");
+                return false;
+            }
+            return true;
         }
     }
 }
