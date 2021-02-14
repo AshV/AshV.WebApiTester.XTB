@@ -128,6 +128,7 @@ namespace AshV.WebApiTester.XTB
                     var result = cr.Response;
                     if (result != null)
                     {
+                        txtRequestUri.Text = result.RequestMessage.RequestUri.ToString();
                         //Set response body tab as active
                         tabReqestResponse.SelectedIndex = 1;
                         tabResponseChild.SelectedIndex = 0;
@@ -137,7 +138,7 @@ namespace AshV.WebApiTester.XTB
                             cr.ResponseBody.StartsWith("{") ?
                             JValue.Parse(cr.ResponseBody).ToString(Newtonsoft.Json.Formatting.Indented)
                             : cr.ResponseBody.StartsWith("<") ?
-                            FormatXml(cr.ResponseBody) :
+                            cr.ResponseBody :
                             cr.ResponseBody;
 
                         btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
@@ -193,7 +194,7 @@ namespace AshV.WebApiTester.XTB
 
         internal CustomResponse RequestHelper(CrmServiceClient csc, HttpMethod method, string queryString, string body = null)
         {
-            queryString = queryString.Replace("\n", "").Replace("\r", "");
+
             if (!csc.IsReady)
             {
                 MessageBox.Show("Service initiation failed! Try in a moment or restart the tool.", null);
@@ -205,9 +206,9 @@ namespace AshV.WebApiTester.XTB
             cr.StartedAt = DateTime.Now;
 
             var client = new HttpClient();
-            cr.Endpoint = $"https://{csc.CrmConnectOrgUriActual.Host}/api/data/v{csc.ConnectedOrgVersion}/";
+            cr.Endpoint = $"https://{csc.CrmConnectOrgUriActual.Host}/api/data/v{csc.ConnectedOrgVersion}";
             cr.ApiVersion = csc.ConnectedOrgVersion.ToString();
-            var msg = new HttpRequestMessage(method, cr.Endpoint + queryString);
+            var msg = new HttpRequestMessage(method, cr.Endpoint + PrepareUri(queryString));
             msg.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 
             var customHeaders = GetSelectedHeaders();
@@ -378,7 +379,7 @@ namespace AshV.WebApiTester.XTB
             return list;
         }
 
-        public DataTable ToDataTable(IEnumerable<dynamic> items)
+        internal DataTable ToDataTable(IEnumerable<dynamic> items)
         {
             var data = items.ToArray();
             if (data.Count() == 0) return null;
@@ -406,7 +407,7 @@ namespace AshV.WebApiTester.XTB
             return dt;
         }
 
-        public void GetReadyForNewResponse()
+        internal void GetReadyForNewResponse()
         {
             btnSend.BackColor = Color.Purple;
             txtResponseBody.Text = "";
@@ -414,19 +415,33 @@ namespace AshV.WebApiTester.XTB
             lblMain.Text = "";
         }
 
-        public bool AuthTypeCheck()
+        internal bool AuthTypeCheck()
         {
-            if (ConnectionDetail?.AuthType != null &&
-                  ConnectionDetail?.NewAuthType != null &&
+            if (ConnectionDetail?.AuthType != null && ConnectionDetail?.NewAuthType != null &&
                   ConnectionDetail.AuthType != Microsoft.Xrm.Sdk.Client.AuthenticationProviderType.OnlineFederation &&
-                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.AD &&
-                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.OAuth &&
-                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.ClientSecret)
+                  (ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.AD ||
+                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.OAuth ||
+                  ConnectionDetail.NewAuthType != Microsoft.Xrm.Tooling.Connector.AuthenticationType.ClientSecret))
             {
                 MessageBox.Show("Your connection type is not supported, Please connect using SDK Login Control to use this Tool.");
                 return false;
             }
             return true;
+        }
+
+        internal static string PrepareUri(string requertUrl)
+        {
+            if (!requertUrl.StartsWith("/"))
+                requertUrl = "/" + requertUrl;
+
+            if (requertUrl.ToLowerInvariant().Contains("/api/data/v"))
+            {
+                requertUrl = requertUrl.Substring(requertUrl.IndexOf("/api/data/v"));
+                requertUrl = requertUrl.Substring(requertUrl.IndexOf('v'));
+                requertUrl = requertUrl.Substring(requertUrl.IndexOf('/'));
+            }
+
+            return requertUrl;
         }
     }
 }
