@@ -117,14 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Rocket" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rocket.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAGBgAAAEAIAC1AgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAYAAAAGAgGAAAA4Hc9+AAAAAFz
+        UkdCAK7OHOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACSklEQVRIS92UsUtb
+        URjFbzSDg0gHBwcHCw4ZHCwkGEFF0Q6Cg6JCpQhK28FJhBZ0kCjtILgIUsgfILgoKKXo4GAk1EKHZtNB
+        i4JDBgcHR0F/5973gkmeT9K61AMn37n3vne+++733Zj/HhEvPhlSJhUjDERMpE3jJ0mAaSNhAtO3RCWw
+        uDW3Y/+UAONBTKeR3W6mCNkFs9D5VwkwTmK8jOxwMxYrsAkOwht2n1g0i7mKEmDcjPFn5Bs3Y27gGWyG
+        xzAqjfkc5kvo8Bpg+ILQAuPwCl7AGEneEVthmmOYgofoJBR2Gfd7ujyBTDFIIQegdlaKPXb4wTsima7B
+        j1C7v2DtFbu/RFsUEmBcQ5jlRRVNOw/DMUbtPHuEbnBT5pq515j/9MYW1frBvI+HM1AP/4EHUGdaD2th
+        KTR/zvMnxC4o837Mf2jxPqow12fGtSPOLkEcZ6xeVidMwlH0NSwC5sOsnSJ986xbKUZQDaK8vI4ccTPm
+        CwabzP1C65x97DP/lZh/yFwI7CKSNGC4irRJMBpirFvqJxU2+GJ9XSiqvFgA5t2YqXjq7z3NMZ4myXdp
+        H4y3PRmKogSYd2D2DakuUl0+2QV3Q+9Dd2LLyXAUEmDegvkOUkWbgWq5HGMZ6caqcyxYm2etrPBBsAn8
+        M9eL8CUvr0CZykzJ+NOyNRDU52knH4ctMgmaMNSZB4L1VhL8RuZJppuadyuPw160jMnoTB9Ej+lRR9Vh
+        3hu2kSCUdVEp2P17QiPm+vvV7a4IoQlUG0XVoJJjeU4w5g66qr1KoGIj3AAAAABJRU5ErkJggg==
+</value>
   </data>
 </root>

@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NuGet;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,11 +12,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
+using HttpClient = System.Net.Http.HttpClient;
 
 namespace AshV.WebApiTester.XTB
 {
@@ -29,9 +32,16 @@ namespace AshV.WebApiTester.XTB
 
         public string HelpUrl => "https://github.com/AshV/AshV.WebApiTester.XTB/wiki";
 
+        private AppInsights ai;
+        private const string aiEndpoint = "https://dc.services.visualstudio.com/v2/track";
+
+        private const string aiKey = "175ccdd7-f61b-4793-8bb5-a88c512310e0";
+
         public WebApiTesterControl()
         {
             InitializeComponent();
+            ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly());
+            ai.WriteEvent("Control Loaded");
         }
 
         private void MyPluginControl_Load(object sender, EventArgs e)
@@ -53,6 +63,13 @@ namespace AshV.WebApiTester.XTB
             {
                 LogInfo("Settings found and loaded");
             }
+            PopulateFavourites();
+        }
+
+        private void PopulateFavourites()
+        {
+            cboFavourites.Items.Clear();
+            cboFavourites.Items.AddRange(mySettings.Requests.ToArray());
         }
 
         private void tsbClose_Click(object sender, EventArgs e)
@@ -64,22 +81,24 @@ namespace AshV.WebApiTester.XTB
         {
             if (!AuthTypeCheck()) return;
 
+
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Executing WebAPI Request...",
+                AsyncArgument = cmbMethod.SelectedItem.ToString(),
                 Work = (worker, args) =>
                 {
                     try
                     {
                         var csc = ConnectionDetail.GetCrmServiceClient();
-                        switch (cmbMethod.SelectedItem.ToString())
+                        switch (args.Argument.ToString())
                         {
                             case "GET":
                                 if (txtRequestUri.Text.StartsWith("<fetch"))
                                 {
                                     if (MessageBox.Show("Direct <fetchXml/> Execution is not supported yet. To see how to Execute <fetchXml/> using WebAPI, Please follow the link.", "Visit", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.Yes)
                                     {
-                                        System.Diagnostics.Process.Start("https://www.ashishvishwakarma.com/Execute-fetchXml-WebAPI-Dynamics-365-Using-JavaScript-Example/");
+                                        Process.Start("https://www.ashishvishwakarma.com/Execute-fetchXml-WebAPI-Dynamics-365-Using-JavaScript-Example/");
                                     }
 
                                     //var result = Service.RetrieveMultiple(new FetchExpression(txtRequestUri.Text));
@@ -124,6 +143,7 @@ namespace AshV.WebApiTester.XTB
                     {
                         MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    ai.WriteEvent("API Called Successfully", 1);
                     var cr = args.Result as CustomResponse;
                     var result = cr.Response;
                     if (result != null)
@@ -143,15 +163,25 @@ namespace AshV.WebApiTester.XTB
 
                         btnSend.BackColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
                         var resultBool = result.IsSuccessStatusCode ? "✔️ Success!" : "❌ Failed!";
-                        lblMain.ForeColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
-                        lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
+                        txtMessage.ForeColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
+
+                        //lblMain.ForeColor = result.IsSuccessStatusCode ? Color.Green : Color.Red;
+                        //  lblMain.Text = $"\n{resultBool}\n🌐 {(int)result.StatusCode} {result.StatusCode}\n📚 {cr.Size / 1024} KB\n⌛ {cr.TimeSpent} ms";
+                        txtMessage.AppendText(Environment.NewLine + resultBool);
+                        txtMessage.AppendText(Environment.NewLine +$"🌐 { (int)result.StatusCode} { result.StatusCode}");
+                        txtMessage.AppendText(Environment.NewLine + $"📚 {cr.Size / 1024} KB");
+                        txtMessage.AppendText(Environment.NewLine + $"⌛ {cr.TimeSpent} ms");
+
+                        //txtMessage.Text = $"\r\n{resultBool}\r\n🌐 {(int)result.StatusCode} {result.StatusCode}\r\n📚 {cr.Size / 1024} KB\r\n⌛ {cr.TimeSpent} ms";
 
                         if (cr.ResponseBody.StartsWith("{"))
                         {
                             var j = JsonConvert.DeserializeObject<GetMultpleResponse>(cr.ResponseBody);
                             if (!(j.value is null))
                             {
-                                lblMain.Text += $"\n\n🎬 {j.value.Count()} Records!";
+                                //lblMain.Text += $"\n\n🎬 {j.value.Count()} Records!";
+                                txtMessage.AppendText( Environment.NewLine + $"\r\n🎬 {j.value.Count()} Records!");
+
                                 dgvResponseTable.DataSource = ToDataTable(j.value);
                                 tabResponseChild.SelectedIndex = 1;
                             }
@@ -298,7 +328,7 @@ namespace AshV.WebApiTester.XTB
         {
             timerLogoRemove.Start();
 
-            splitContainer1.SplitterDistance = 80;
+            splitMain.SplitterDistance = 80;
             splitContainerRoot.SplitterDistance = 100;
 
             cmbMethod.SelectedIndex = 0;
@@ -342,11 +372,12 @@ namespace AshV.WebApiTester.XTB
 
         private void timerLogoRemove_Tick(object sender, EventArgs e)
         {
-            splitContainer1.Panel1.Controls.Remove(pictureBoxLogo);
+            splitLeftLower.Panel1.Controls.Remove(pictureBoxLogo);
         }
 
         internal void RequestHeaders()
         {
+
             var listHeaders = new List<Tuple<bool, string, string>>() {
                 new Tuple<bool,string,string>(true,"Accept","application/json"),
                 new Tuple<bool,string,string>(true,"OData-MaxVersion","4.0"),
@@ -354,7 +385,6 @@ namespace AshV.WebApiTester.XTB
                 new Tuple<bool,string,string>(true,"If-None-Match","null"),
                 new Tuple<bool,string,string>(true,"Content-Type","application/json"),
             };
-
             listHeaders.ForEach(row =>
             {
                 dgvRequestHeaders.Rows.Add(row.Item1, row.Item2, row.Item3);
@@ -412,7 +442,8 @@ namespace AshV.WebApiTester.XTB
             btnSend.BackColor = Color.Purple;
             txtResponseBody.Text = "";
             dgvResponseTable.DataSource = null;
-            lblMain.Text = "";
+           // lblMain.Text = "";
+            txtMessage.Text = string.Empty;
         }
 
         internal bool AuthTypeCheck()
@@ -442,6 +473,63 @@ namespace AshV.WebApiTester.XTB
             }
 
             return requertUrl;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            var addRequest = new AddRequest(mySettings);
+
+            if (addRequest.ShowDialog() != DialogResult.OK) return;
+
+            var request = new Request { Name = addRequest.SettingName, Description = addRequest.Description };
+            request.Method = cmbMethod.SelectedItem.ToString();
+            request.Uri = PrepareUri(txtRequestUri.Text);
+            request.Body = txtRequestBody.Text;
+            request.Headers.AddRange(GetHeaders(dgvRequestHeaders.Rows));
+            if (mySettings.Requests.Any(mr => mr.Name == request.Name))
+                mySettings.Requests[mySettings.Requests.IndexOf(request)] = request;
+            else
+                mySettings.Requests.Add(request);
+
+            SettingsManager.Instance.Save(typeof(Settings), mySettings);
+
+            PopulateFavourites();
+        }
+            
+        private List<Header> GetHeaders(DataGridViewRowCollection rows)
+        {
+            List<Header> headers = new List<Header>();
+            foreach (DataGridViewRow row in rows)
+            {
+                if (row.Cells[0]?.Value != null) headers.Add(new Header(row));
+            }
+            return headers;
+        }
+
+        private void cboFavourites_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboFavourites.SelectedIndex == -1) return;
+            Request request = cboFavourites.SelectedItem as Request;
+            txtRequestBody.Text = request.Body;
+            txtRequestUri.Text = request.Uri;
+            cmbMethod.SelectedIndex = cmbMethod.Items.IndexOf(request.Method);
+            dgvRequestHeaders.Rows.Clear();
+            request.Headers.ForEach(header => dgvRequestHeaders.Rows.Add(header.Enable, header.Name, header.Value));
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (cboFavourites.SelectedIndex == -1 ) return;
+            Request request = (Request)cboFavourites.SelectedItem;
+            if (MessageBox.Show($"Do you want to remove {request.Name} from your favourite list?","Remove Favourite?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                mySettings.Requests.Remove(request);
+                SettingsManager.Instance.Save(typeof(Settings), mySettings);
+
+                PopulateFavourites();
+                cboFavourites.SelectedIndex = -1;
+                cboFavourites.Text = string.Empty;
+            }
         }
     }
 }
