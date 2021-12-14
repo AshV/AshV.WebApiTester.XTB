@@ -353,6 +353,7 @@ namespace AshV.WebApiTester.XTB
                 new Tuple<bool,string,string>(true,"OData-Version","4.0"),
                 new Tuple<bool,string,string>(true,"If-None-Match","null"),
                 new Tuple<bool,string,string>(true,"Content-Type","application/json"),
+                new Tuple<bool,string,string>(true,"Prefer","odata.include-annotations=\"OData.Community.Display.V1.FormattedValue\""),
             };
 
             listHeaders.ForEach(row =>
